@@ -101,6 +101,8 @@ td {
     background-color: transparent;
     border: none;
     cursor: pointer;
+    border: solid rgb(170, 170, 170);
+    margin: 5px;
 }
 
 .icon-button img {
