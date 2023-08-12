@@ -1,0 +1,26 @@
+Make the y label for today say today
+
+Maybe add a click to expand sidebar to get better view of database.
+when you click away from that region, it shrinks the sidebar gain. 
+maybe expand to 2/3 of screen.
+
+maybe add a confirmation notification that it was added at bottom right.
+
+
+maybe
+scrolling down shows previous days sheet. though the scrolling has to snap.
+while sidebar stays fixed.
+
+should i make the sidebar scrollable? should i make a recent filter? 
+or the top for favorites?
+should i make cute icons like for rice?
+over button i should have hovertip saying rice - 1 cup
+
+
+Delete function
+have a trashcan button
+when click, a bunch of x appears to the left of the item on the list. clicking the button deletes that item. 
+
+
+have an ai component that searches for your description.
+use openfoodfact api to pull information about food that are branded.

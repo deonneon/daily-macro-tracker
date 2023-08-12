@@ -1,0 +1,113 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.main-content {
+    width: 70%;
+    padding: 15px 50px 20px 50px;
+    box-sizing: border-box;
+    flex: 3;
+}
+
+.sidebar {
+    flex: 1;
+    border-left: 1px solid #ccc;
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+th {
+    text-align: left;
+    padding-right: 5px;
+}
+
+td {
+    text-align: left;
+    padding-right: 20px;
+}
+
+
+.food-dropdown {
+    border: 1px solid #ccc;
+    position: absolute;
+    zIndex: 1;
+    background: #fff;
+    max-height: 150px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.food-dropdown-item {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.food-dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.foodInput {
+    padding-bottom: 20px;
+}
+
+.foodInput input {
+    height: 30px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.foodInput button {
+    height: 36px;
+}
+
+.dailyDietTable {
+    min-height: 200px;
+    display: block;
+    /* Allows us to set height on a table, but it'll affect how tbody and thead behave */
+    overflow-y: auto;
+    /* Allows for scrolling if the content of the table exceeds the min-height */
+}
+
+.chartsContainer {
+    display: flex;
+    justify-content: space-between;
+    /* Creates space between the charts */
+    max-width: calc(40% - 30px);
+}
+
+.chartColumn {
+    flex: 1;
+    /* Each chart will take equal width */
+    padding: 0 15px;
+    max-width: calc(50% - 30px);
+    /* Account for padding; 50% for half the container width */
+    overflow: hidden;
+    height: 200px;
+    width: 300px;
+}
+
+.showForm {
+    padding-top: 10px;
+}
+
+.icon-button {
+    width: 50px;
+    /* Or whatever size you want */
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.icon-button img {
+    width: 100%;
+    /* Makes the image take the full width of the button */
+    height: 100%;
+    /* Makes the image take the full height of the button */
+    object-fit: contain;
+    /* Adjusts the image's size and position to fill its box, often used with responsive designs */
+}
