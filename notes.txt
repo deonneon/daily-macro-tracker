@@ -23,3 +23,5 @@ have an ai component that searches for your description.
 use openfoodfact api to pull information about food that are branded.
 
 when filling food form, tags to attach shows up.
+add a suggested amount for each input using either ai or a prefilled sheet right below inputs.
+

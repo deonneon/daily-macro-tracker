@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './styles.css';  // Importing the styles we created
+import './styles.css';
 import { DietProvider } from './DietContext';
 import Navbar from './Navbar';
 import FoodInput from './FoodInput';
@@ -7,6 +7,7 @@ import DailyDietList from './DailyDietList';
 import Dashboard from './Dashboard';
 import DatabasePage from './DatabasePage';
 import IconButton from './IconButton';
+import QAPage from './QAPage';
 import riceIcon from './icons/rice.png';
 import bananaIcon from './icons/banana.png';
 
@@ -39,8 +40,8 @@ function App() {
         )}
 
         {currentPage === 'database' && <DatabasePage />}
-
         {currentPage === 'history' && <div>Historic Diet Page (To be implemented)</div>}
+        {currentPage === 'qa' && <QAPage />} {/* Render the QAPage when currentPage is 'qa' */}
       </div>
     </DietProvider>
   );
