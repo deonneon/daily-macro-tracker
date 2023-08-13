@@ -116,7 +116,7 @@ const FoodInput = () => {
                     <p>Please fill in as much as possible.</p>
                     <input value={proteinInput} onChange={handleProteinInputChange} placeholder="Protein" />
                     <input value={calorieInput} onChange={handleCalorieInputChange} placeholder="Calories" />
-                    <input value={unitInput} onChange={(e) => setUnitInput(e.target.value)} placeholder="Unit" />
+                    <input value={unitInput} onChange={(e) => setUnitInput(e.target.value)} placeholder="Unit Of Measurement" />
                     <button onClick={handleSubmitNewFood} >Submit New Food</button>
                 </div>
             )}

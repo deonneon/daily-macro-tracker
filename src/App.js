@@ -35,6 +35,9 @@ function App() {
                 <IconButton foodName="rice" icon={riceIcon} />
                 <IconButton foodName="banana" icon={bananaIcon} />
               </div>
+              <div className="credits">
+                Built by Deon
+              </div>
             </div>
           </div>
         )}

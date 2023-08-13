@@ -14,7 +14,7 @@
 .sidebar {
     flex: 1;
     border-left: 1px solid #ccc;
-    padding: 20px;
+    padding: 20px 50px;
     height: 100vh;
     overflow-y: auto;
     box-sizing: border-box;
@@ -116,16 +116,21 @@ td {
     /* Adjusts the image's size and position to fill its box, often used with responsive designs */
 }
 
+.iconbar {
+    margin: 10px 0px;
+}
+
 .right-align {
     text-align: right;
 }
 
-.iconbar {
-    margin-top: 10px;
-}
 
 .sidebar-foodlist {
     height: 75vh;
+}
+
+.credits {
+    text-align: right;
 }
 
 .qa-card {
