@@ -13,10 +13,6 @@ while sidebar stays fixed.
 
 should i make the sidebar scrollable? should i make a recent filter? 
 or the top for favorites?
-should i make cute icons like for rice?
-over button i should have hovertip saying rice - 1 cup
-
-add units to protein.
 
 Delete function
 have a trashcan button
