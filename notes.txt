@@ -29,3 +29,10 @@ add a suggested amount for each input using either ai or a prefilled sheet right
 Break Q&A Page into general questions about macro tracking. have another section for concern. 
 like organic vs inorganic is a concern. 
 maybe integrate that while adding food. 
+
+
+
+To make the diet column look cleaner, instead of listing the dates, list one date and skip the others.
+
+Maybe add a database for set of foodlist.
+
