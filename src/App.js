@@ -40,7 +40,7 @@ function App() {
         )}
 
         {currentPage === 'database' && <DatabasePage />}
-        {currentPage === 'history' && <div>Historic Diet Page (To be implemented)</div>}
+        {currentPage === 'history' && <div><DailyDietList /></div>}
         {currentPage === 'qa' && <QAPage />} {/* Render the QAPage when currentPage is 'qa' */}
       </div>
     </DietProvider>
