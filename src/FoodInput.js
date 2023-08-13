@@ -29,10 +29,12 @@ const FoodInput = () => {
     const inputRef = useRef(null);
 
     const handleInputChange = (e) => {
-        setInput(e.target.value);
-        if (e.target.value) {
+        const lowercasedValue = e.target.value.toLowerCase();
+        setInput(lowercasedValue);
+
+        if (lowercasedValue) {
             const matches = Object.keys(database).filter(food =>
-                food.toLowerCase().includes(e.target.value.toLowerCase())
+                food.toLowerCase().includes(lowercasedValue)
             );
             setMatchingFoods(matches);
         } else {
