@@ -13,6 +13,11 @@ function getTodayDate() {
     return `${year}-${month}-${day}`;
 }
 
+const isValidNumberOrBlank = (value) => {
+    // This regex checks if the string is a valid int or blank
+    return /^(\d+(\.\d+)?)?$/.test(value);
+};
+
 const FoodInput = () => {
     const { database, setDatabase, dailyDiet, setDailyDiet } = useContext(DietContext);
     const [input, setInput] = useState('');
@@ -68,6 +73,18 @@ const FoodInput = () => {
         setShowForm(false);
     };
 
+    const handleProteinInputChange = (e) => {
+        if (isValidNumberOrBlank(e.target.value)) {
+            setProteinInput(e.target.value);
+        }
+    };
+
+    const handleCalorieInputChange = (e) => {
+        if (isValidNumberOrBlank(e.target.value)) {
+            setCalorieInput(e.target.value);
+        }
+    };
+
     return (
         <div className="foodInput">
             <input
@@ -95,8 +112,8 @@ const FoodInput = () => {
             {showForm && (
                 <div className="showForm">
                     <p>Please fill in as much as possible.</p>
-                    <input value={proteinInput} onChange={(e) => { setProteinInput(e.target.value); }} placeholder="Protein" />
-                    <input value={calorieInput} onChange={(e) => { setCalorieInput(e.target.value); }} placeholder="Calories" />
+                    <input value={proteinInput} onChange={handleProteinInputChange} placeholder="Protein" />
+                    <input value={calorieInput} onChange={handleCalorieInputChange} placeholder="Calories" />
                     <input value={unitInput} onChange={(e) => setUnitInput(e.target.value)} placeholder="Unit" />
                     <button onClick={handleSubmitNewFood} >Submit New Food</button>
                 </div>

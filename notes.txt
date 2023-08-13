@@ -21,3 +21,5 @@ when click, a bunch of x appears to the left of the item on the list. clicking t
 
 have an ai component that searches for your description.
 use openfoodfact api to pull information about food that are branded.
+
+when filling food form, tags to attach shows up.
