@@ -2,6 +2,17 @@ import React, { useState, useContext, useRef, useEffect } from 'react';
 import { DietContext } from './DietContext';
 import './styles.css';
 
+function getTodayDate() {
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const now = new Date();
+
+    const year = new Intl.DateTimeFormat('en', { year: 'numeric', timeZone }).format(now);
+    const month = new Intl.DateTimeFormat('en', { month: '2-digit', timeZone }).format(now);
+    const day = new Intl.DateTimeFormat('en', { day: '2-digit', timeZone }).format(now);
+
+    return `${year}-${month}-${day}`;
+}
+
 const FoodInput = () => {
     const { database, setDatabase, dailyDiet, setDailyDiet } = useContext(DietContext);
     const [input, setInput] = useState('');
@@ -29,17 +40,18 @@ const FoodInput = () => {
         setMatchingFoods([]);
         inputRef.current.focus();
     };
-
     const handleAddFood = () => {
+        const currentDate = getTodayDate();
         if (!database[input]) {
             setShowForm(true);
             return;
         }
-        setDailyDiet([...dailyDiet, { name: input, ...database[input] }]);
+        setDailyDiet([...dailyDiet, { date: currentDate, name: input, ...database[input] }]);
         setInput('');
     };
 
     const handleSubmitNewFood = () => {
+        const currentDate = getTodayDate();
         setDatabase({
             ...database,
             [input]: {
@@ -48,7 +60,7 @@ const FoodInput = () => {
                 unit: unitInput
             }
         });
-        setDailyDiet([...dailyDiet, { name: input, protein: proteinInput, calories: calorieInput, unit: unitInput }]);
+        setDailyDiet([...dailyDiet, { date: currentDate, name: input, protein: proteinInput, calories: calorieInput, unit: unitInput }]);
         setInput('');
         setProteinInput('');
         setCalorieInput('');

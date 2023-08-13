@@ -83,7 +83,7 @@ const options = {
     scales: {
         x: {
             ticks: {
-                display: true  // This hides the tick labels, not the axis label
+                display: true,
             },
             gridLines: {
                 display: false  // This hides the grid lines for the y-axis

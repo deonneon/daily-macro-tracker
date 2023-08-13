@@ -8,6 +8,7 @@ const DailyDietList = () => {
         <table className="dailyDietTable">
             <thead>
                 <tr>
+                    <th>Date</th>
                     <th>Food</th>
                     <th>Protein</th>
                     <th>Calories</th>
@@ -17,6 +18,7 @@ const DailyDietList = () => {
             <tbody>
                 {dailyDiet.map((food, index) => (
                     <tr key={index}>
+                        <td>{food.date}</td>
                         <td>{food.name}</td>
                         <td>{food.protein}</td>
                         <td>{food.calories}</td>
