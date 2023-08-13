@@ -13,10 +13,6 @@ while sidebar stays fixed.
 
 should i make the sidebar scrollable? should i make a recent filter? 
 or the top for favorites?
-should i make cute icons like for rice?
-over button i should have hovertip saying rice - 1 cup
-
-add units to protein.
 
 Delete function
 have a trashcan button
@@ -25,3 +21,11 @@ when click, a bunch of x appears to the left of the item on the list. clicking t
 
 have an ai component that searches for your description.
 use openfoodfact api to pull information about food that are branded.
+
+when filling food form, tags to attach shows up.
+add a suggested amount for each input using either ai or a prefilled sheet right below inputs.
+
+
+Break Q&A Page into general questions about macro tracking. have another section for concern. 
+like organic vs inorganic is a concern. 
+maybe integrate that while adding food. 

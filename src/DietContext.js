@@ -7,7 +7,8 @@ export const DietProvider = ({ children }) => {
     const initialDatabase = JSON.parse(localStorage.getItem('database')) || {};
     // establish database
     const [database, setDatabase] = useState(initialDatabase);
-    const [dailyDiet, setDailyDiet] = useState([]);
+    const savedDailyDiet = JSON.parse(localStorage.getItem('dailyDiet'));
+    const [dailyDiet, setDailyDiet] = useState(savedDailyDiet || []);
     //update local storage on change
     useEffect(() => {
         localStorage.setItem('database', JSON.stringify(database));

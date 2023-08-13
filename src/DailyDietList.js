@@ -8,18 +8,20 @@ const DailyDietList = () => {
         <table className="dailyDietTable">
             <thead>
                 <tr>
+                    <th>Date</th>
                     <th>Food</th>
-                    <th>Protein</th>
-                    <th>Calories</th>
+                    <th className="right-align">Protein</th>
+                    <th className="right-align">Calories</th>
                     <th>Unit</th>
                 </tr>
             </thead>
             <tbody>
                 {dailyDiet.map((food, index) => (
                     <tr key={index}>
+                        <td>{food.date}</td>
                         <td>{food.name}</td>
-                        <td>{food.protein}</td>
-                        <td>{food.calories}</td>
+                        <td className="right-align">{food.protein}g</td>
+                        <td className="right-align">{food.calories}</td>
                         <td>{food.unit}</td>
                     </tr>
                 ))}

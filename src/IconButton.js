@@ -16,7 +16,10 @@ const IconButton = ({ foodName, icon }) => {
     };
 
     return (
-        <button onClick={handleButtonClick} className="icon-button">
+        <button onClick={handleButtonClick}
+            className="icon-button"
+            title={`${foodExists.unit} of ${foodName}`}
+        >
             <img src={icon} alt={`${foodName} icon`} />
         </button>
     );

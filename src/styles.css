@@ -113,3 +113,28 @@ td {
     object-fit: contain;
     /* Adjusts the image's size and position to fill its box, often used with responsive designs */
 }
+
+.right-align {
+    text-align: right;
+}
+
+.iconbar {
+    margin-top: 10px;
+}
+
+.sidebar-foodlist {
+    height: 75vh;
+}
+
+.qa-card {
+    border-bottom: solid lightgray;
+    list-style-type: none
+}
+
+.qa-container {
+    display: flex;
+    justify-content: space-between;
+    height: 100vh;
+    padding: 15px 50px 20px 50px;
+    box-sizing: border-box;
+}
