@@ -27,9 +27,13 @@ function App() {
               <Dashboard />
             </div>
             <div className="sidebar">
-              <DatabasePage />
-              <IconButton foodName="rice" icon={riceIcon} />
-              <IconButton foodName="banana" icon={bananaIcon} />
+              <div className="sidebar-foodlist">
+                <DatabasePage />
+              </div>
+              <div className="iconbar">
+                <IconButton foodName="rice" icon={riceIcon} />
+                <IconButton foodName="banana" icon={bananaIcon} />
+              </div>
             </div>
           </div>
         )}

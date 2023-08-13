@@ -117,3 +117,11 @@ td {
 .right-align {
     text-align: right;
 }
+
+.iconbar {
+    margin-top: 10px;
+}
+
+.sidebar-foodlist {
+    height: 75vh;
+}
