@@ -95,14 +95,16 @@ td {
 }
 
 .icon-button {
-    width: 50px;
+    width: 40px;
     /* Or whatever size you want */
-    height: 50px;
+    height: 40px;
     background-color: transparent;
     border: none;
     cursor: pointer;
     border: solid rgb(170, 170, 170);
     margin: 5px;
+    border-radius: 10px;
+    box-shadow: 2px 3px gray;
 }
 
 .icon-button img {
