@@ -25,3 +25,7 @@ use openfoodfact api to pull information about food that are branded.
 when filling food form, tags to attach shows up.
 add a suggested amount for each input using either ai or a prefilled sheet right below inputs.
 
+
+Break Q&A Page into general questions about macro tracking. have another section for concern. 
+like organic vs inorganic is a concern. 
+maybe integrate that while adding food. 
