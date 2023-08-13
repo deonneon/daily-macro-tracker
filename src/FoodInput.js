@@ -5,16 +5,13 @@ import './styles.css';
 function getTodayDate() {
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const now = new Date();
-
     const year = new Intl.DateTimeFormat('en', { year: 'numeric', timeZone }).format(now);
     const month = new Intl.DateTimeFormat('en', { month: '2-digit', timeZone }).format(now);
     const day = new Intl.DateTimeFormat('en', { day: '2-digit', timeZone }).format(now);
-
     return `${year}-${month}-${day}`;
 }
 
 const isValidNumberOrBlank = (value) => {
-    // This regex checks if the string is a valid int or blank
     return /^(\d+(\.\d+)?)?$/.test(value);
 };
 
@@ -26,12 +23,12 @@ const FoodInput = () => {
     const [unitInput, setUnitInput] = useState('');
     const [matchingFoods, setMatchingFoods] = useState([]);
     const [showForm, setShowForm] = useState(false);
+    const [showCancel, setShowCancel] = useState(false);
     const inputRef = useRef(null);
 
     const handleInputChange = (e) => {
         const lowercasedValue = e.target.value.toLowerCase();
         setInput(lowercasedValue);
-
         if (lowercasedValue) {
             const matches = Object.keys(database).filter(food =>
                 food.toLowerCase().includes(lowercasedValue)
@@ -42,19 +39,39 @@ const FoodInput = () => {
         }
     };
 
+    const handleProteinInputChange = (e) => {
+        if (isValidNumberOrBlank(e.target.value)) {
+            setProteinInput(e.target.value);
+        }
+    };
+
+    const handleCalorieInputChange = (e) => {
+        if (isValidNumberOrBlank(e.target.value)) {
+            setCalorieInput(e.target.value);
+        }
+    };
+
     const handleDropdownClick = (foodName) => {
         setInput(foodName);
         setMatchingFoods([]);
         inputRef.current.focus();
     };
+
     const handleAddFood = () => {
         const currentDate = getTodayDate();
         if (!database[input]) {
             setShowForm(true);
+            setShowCancel(true);
             return;
         }
         setDailyDiet([...dailyDiet, { date: currentDate, name: input, ...database[input] }]);
         setInput('');
+    };
+
+    const handleCancel = () => {
+        setShowForm(false);
+        setInput('');
+        setShowCancel(false);
     };
 
     const handleSubmitNewFood = () => {
@@ -73,18 +90,7 @@ const FoodInput = () => {
         setCalorieInput('');
         setUnitInput('');
         setShowForm(false);
-    };
-
-    const handleProteinInputChange = (e) => {
-        if (isValidNumberOrBlank(e.target.value)) {
-            setProteinInput(e.target.value);
-        }
-    };
-
-    const handleCalorieInputChange = (e) => {
-        if (isValidNumberOrBlank(e.target.value)) {
-            setCalorieInput(e.target.value);
-        }
+        setShowCancel(false);
     };
 
     return (
@@ -109,14 +115,18 @@ const FoodInput = () => {
                     ))}
                 </div>
             )}
-            <button onClick={handleAddFood}>Add Food</button>
+            {showCancel ? (
+                <button onClick={handleCancel}>Cancel</button>
+            ) : (
+                <button onClick={handleAddFood}>Add Food</button>
+            )}
 
             {showForm && (
                 <div className="showForm">
                     <p>Please fill in as much as possible.</p>
                     <input value={proteinInput} onChange={handleProteinInputChange} placeholder="Protein" />
                     <input value={calorieInput} onChange={handleCalorieInputChange} placeholder="Calories" />
-                    <input value={unitInput} onChange={(e) => setUnitInput(e.target.value)} placeholder="Unit Of Measurement" />
+                    <input value={unitInput} onChange={(e) => setUnitInput(e.target.value)} placeholder="Unit of Measurement" />
                     <button onClick={handleSubmitNewFood} >Submit New Food</button>
                 </div>
             )}
