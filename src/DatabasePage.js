@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { DietContext } from './DietContext';
+import './styles.css';
 
 function getTodayDate() {
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -30,8 +31,8 @@ const DatabasePage = () => {
                 <thead>
                     <tr>
                         <th>Food</th>
-                        <th>Protein</th>
-                        <th>Calories</th>
+                        <th className="right-align">Protein</th>
+                        <th className="right-align">Calories</th>
                         <th>Unit</th>
                     </tr>
                 </thead>
@@ -39,8 +40,8 @@ const DatabasePage = () => {
                     {Object.entries(database).map(([foodName, foodDetails]) => (
                         <tr key={foodName} onClick={() => handleFoodClick(foodName)} style={{ cursor: 'pointer' }}>
                             <td>{foodName}</td>
-                            <td>{foodDetails.protein}</td>
-                            <td>{foodDetails.calories}</td>
+                            <td className="right-align">{foodDetails.protein}</td>
+                            <td className="right-align">{foodDetails.calories}</td>
                             <td>{foodDetails.unit}</td>
                         </tr>
                     ))}

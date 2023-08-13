@@ -113,3 +113,7 @@ td {
     object-fit: contain;
     /* Adjusts the image's size and position to fill its box, often used with responsive designs */
 }
+
+.right-align {
+    text-align: right;
+}
