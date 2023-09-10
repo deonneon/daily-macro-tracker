@@ -14,8 +14,22 @@ export const DietProvider = ({ children }) => {
         localStorage.setItem('database', JSON.stringify(database));
     }, [database]);
 
+    const removeFoodEntry = (index) => {
+        const newDailyDiet = [...dailyDiet];
+        newDailyDiet.splice(index, 1);
+        setDailyDiet(newDailyDiet);
+        localStorage.setItem('dailyDiet', JSON.stringify(newDailyDiet));
+    };
+
+    const removeFoodFromDatabase = (foodName) => {
+        const newDatabase = { ...database };
+        delete newDatabase[foodName];
+        setDatabase(newDatabase);
+        localStorage.setItem('database', JSON.stringify(newDatabase));
+    };
+
     return (
-        <DietContext.Provider value={{ database, setDatabase, dailyDiet, setDailyDiet }}>
+        <DietContext.Provider value={{ database, setDatabase, dailyDiet, setDailyDiet, removeFoodEntry, removeFoodFromDatabase }}>
             {children}
         </DietContext.Provider>
     );

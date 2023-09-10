@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { DietContext } from './DietContext';
 import './styles.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function getTodayDate() {
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -14,7 +16,7 @@ function getTodayDate() {
 }
 
 const DatabasePage = () => {
-    const { database, dailyDiet, setDailyDiet } = useContext(DietContext);
+    const { database, dailyDiet, setDailyDiet, removeFoodFromDatabase } = useContext(DietContext);
 
     const handleFoodClick = (foodName) => {
         const foodDetails = database[foodName];
@@ -38,11 +40,14 @@ const DatabasePage = () => {
                 </thead>
                 <tbody>
                     {Object.entries(database).map(([foodName, foodDetails]) => (
-                        <tr key={foodName} onClick={() => handleFoodClick(foodName)} style={{ cursor: 'pointer' }}>
+                        <tr key={foodName} className="foodRow" onClick={() => handleFoodClick(foodName)} style={{ cursor: 'pointer' }}>
                             <td>{foodName}</td>
                             <td className="right-align">{foodDetails.protein}</td>
                             <td className="right-align">{foodDetails.calories}</td>
                             <td>{foodDetails.unit}</td>
+                            <td>
+                                <FontAwesomeIcon className="trashIcon" icon={faTrash} onClick={(e) => { e.stopPropagation(); removeFoodFromDatabase(foodName); }} style={{ cursor: 'pointer' }} />
+                            </td>
                         </tr>
                     ))}
                 </tbody>

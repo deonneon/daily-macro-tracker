@@ -58,6 +58,10 @@ const FoodInput = () => {
     };
 
     const handleAddFood = () => {
+        if (input.trim() === '') {
+            return;
+        }
+
         const currentDate = getTodayDate();
         if (!database[input]) {
             setShowForm(true);
@@ -75,6 +79,10 @@ const FoodInput = () => {
     };
 
     const handleSubmitNewFood = () => {
+        if (input.trim() === '') {
+            return;
+        }
+
         const currentDate = getTodayDate();
         setDatabase({
             ...database,
@@ -118,7 +126,7 @@ const FoodInput = () => {
             {showCancel ? (
                 <button onClick={handleCancel}>Cancel</button>
             ) : (
-                <button onClick={handleAddFood}>Add Food</button>
+                <button onClick={handleAddFood} disabled={!input.trim()}>Add Food</button>
             )}
 
             {showForm && (
@@ -127,7 +135,7 @@ const FoodInput = () => {
                     <input value={proteinInput} onChange={handleProteinInputChange} placeholder="Protein" />
                     <input value={calorieInput} onChange={handleCalorieInputChange} placeholder="Calories" />
                     <input value={unitInput} onChange={(e) => setUnitInput(e.target.value)} placeholder="Unit of Measurement" />
-                    <button onClick={handleSubmitNewFood} >Submit New Food</button>
+                    <button onClick={handleSubmitNewFood} disabled={!input.trim()}>Submit New Food</button>
                 </div>
             )}
         </div>

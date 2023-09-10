@@ -145,3 +145,17 @@ td {
     padding: 15px 50px 20px 50px;
     box-sizing: border-box;
 }
+
+.foodRow .trashIcon {
+    visibility: hidden;
+}
+
+.foodRow:hover .trashIcon {
+    visibility: visible;
+}
+
+
+table {
+    /* This removes flickering of trashcan button across column of same row*/
+    border-collapse: collapse;
+}

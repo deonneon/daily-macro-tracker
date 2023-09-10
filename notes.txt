@@ -34,5 +34,11 @@ maybe integrate that while adding food.
 
 To make the diet column look cleaner, instead of listing the dates, list one date and skip the others.
 
-Maybe add a database for set of foodlist.
+Maybe add a database for predefined foodset.
 
+Add goal line for dashboard.
+
+I need a way to clear the list of food for that day.
+what if you accidentally log for the wrong date? Maybe there is a way to click selected and move
+
+add by me a coffee link.
