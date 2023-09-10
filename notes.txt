@@ -14,11 +14,6 @@ while sidebar stays fixed.
 should i make the sidebar scrollable? should i make a recent filter? 
 or the top for favorites?
 
-Delete function
-have a trashcan button
-when click, a bunch of x appears to the left of the item on the list. clicking the button deletes that item. 
-
-
 have an ai component that searches for your description.
 use openfoodfact api to pull information about food that are branded.
 
