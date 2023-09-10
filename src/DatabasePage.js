@@ -23,7 +23,6 @@ const DatabasePage = () => {
         const updatedDailyDiet = [...dailyDiet, { ...foodDetails, name: foodName, date: getTodayDate() }];
 
         setDailyDiet(updatedDailyDiet);
-        localStorage.setItem('dailyDiet', JSON.stringify(updatedDailyDiet));
     };
 
     return (

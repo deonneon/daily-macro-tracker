@@ -13,19 +13,20 @@ export const DietProvider = ({ children }) => {
     useEffect(() => {
         localStorage.setItem('database', JSON.stringify(database));
     }, [database]);
+    useEffect(() => {
+        localStorage.setItem('dailyDiet', JSON.stringify(dailyDiet));
+    }, [dailyDiet]);
 
     const removeFoodEntry = (index) => {
         const newDailyDiet = [...dailyDiet];
         newDailyDiet.splice(index, 1);
         setDailyDiet(newDailyDiet);
-        localStorage.setItem('dailyDiet', JSON.stringify(newDailyDiet));
     };
 
     const removeFoodFromDatabase = (foodName) => {
         const newDatabase = { ...database };
         delete newDatabase[foodName];
         setDatabase(newDatabase);
-        localStorage.setItem('database', JSON.stringify(newDatabase));
     };
 
     return (

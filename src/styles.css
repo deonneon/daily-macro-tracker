@@ -129,6 +129,27 @@ td {
     height: 75vh;
 }
 
+/* Set tbody to be scrollable and provide a maximum height */
+.sidebar-foodlist tbody {
+    display: block;
+    max-height: 65vh;
+    /* Adjust this value based on your needs */
+    overflow-y: auto;
+}
+
+/* Make other table parts block display so they line up correctly */
+.sidebar-foodlist thead,
+.sidebar-foodlist tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* This will be required to make the table take full width */
+.sidebar-foodlist table {
+    width: 100%;
+}
+
 .credits {
     text-align: right;
 }
