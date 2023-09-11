@@ -1,6 +1,7 @@
 import React, { useState, useContext, useRef } from 'react';
 import { DietContext } from './DietContext';
 import './styles.css';
+import AIQueryComponent from './AIQueryComponent';
 
 function getTodayDate() {
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -25,6 +26,7 @@ const FoodInput = () => {
     const [showForm, setShowForm] = useState(false);
     const [showCancel, setShowCancel] = useState(false);
     const inputRef = useRef(null);
+    const [hideAIResponse, setHideAIResponse] = useState(false);
 
     const handleInputChange = (e) => {
         const lowercasedValue = e.target.value.toLowerCase();
@@ -78,6 +80,12 @@ const FoodInput = () => {
         setShowCancel(false);
     };
 
+    const handleKeyDownAdd = (e) => {
+        if (e.key === 'Enter' && input.trim()) {
+            handleAddFood();
+        }
+    };
+
     const handleSubmitNewFood = () => {
         if (input.trim() === '') {
             return;
@@ -99,6 +107,18 @@ const FoodInput = () => {
         setUnitInput('');
         setShowForm(false);
         setShowCancel(false);
+        setHideAIResponse(true);
+    };
+
+    const handleAIData = (data) => {
+        if (data) {
+            setInput(data.food_name.toLowerCase() || '');
+            setProteinInput(data.protein || '');
+            setCalorieInput(data.calories || '');
+            setUnitInput(data.measurement || '');
+            setShowForm(true);
+            setHideAIResponse(false)
+        }
     };
 
     return (
@@ -107,6 +127,7 @@ const FoodInput = () => {
                 ref={inputRef}
                 value={input}
                 onChange={handleInputChange}
+                onKeyDown={handleKeyDownAdd}
                 onBlur={() => setTimeout(() => setMatchingFoods([]), 150)}
                 placeholder="Enter food name"
             />
@@ -128,6 +149,8 @@ const FoodInput = () => {
             ) : (
                 <button onClick={handleAddFood} disabled={!input.trim()}>Add Food</button>
             )}
+
+            <AIQueryComponent onDataReceived={handleAIData} hideResponse={hideAIResponse} />
 
             {showForm && (
                 <div className="showForm">
