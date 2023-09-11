@@ -11,10 +11,9 @@ maybe
 scrolling down shows previous days sheet. though the scrolling has to snap.
 while sidebar stays fixed.
 
-should i make the sidebar scrollable? should i make a recent filter? 
+should i make a recent filter? 
 or the top for favorites?
 
-have an ai component that searches for your description.
 use openfoodfact api to pull information about food that are branded.
 
 when filling food form, tags to attach shows up.
@@ -24,7 +23,6 @@ add a suggested amount for each input using either ai or a prefilled sheet right
 Break Q&A Page into general questions about macro tracking. have another section for concern. 
 like organic vs inorganic is a concern. 
 maybe integrate that while adding food. 
-
 
 
 To make the diet column look cleaner, instead of listing the dates, list one date and skip the others.
@@ -37,3 +35,13 @@ I need a way to clear the list of food for that day.
 what if you accidentally log for the wrong date? Maybe there is a way to click selected and move
 
 add by me a coffee link.
+
+
+built by deon moves when it should be fixed regardless if iconbutton is present
+
+
+
+Latest effort.
+sept 10
+I made the sidebar scrollable but it made the tbody and theader columns misaligned. 
+should i also make the daily food list scrollable?
