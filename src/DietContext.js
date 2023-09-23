@@ -3,30 +3,39 @@ import React, { createContext, useState, useEffect } from 'react';
 export const DietContext = createContext();
 
 export const DietProvider = ({ children }) => {
-    // declare local storage
-    const initialDatabase = JSON.parse(localStorage.getItem('database')) || {};
-    // establish database
-    const [database, setDatabase] = useState(initialDatabase);
-    const savedDailyDiet = JSON.parse(localStorage.getItem('dailyDiet'));
-    const [dailyDiet, setDailyDiet] = useState(savedDailyDiet || []);
-    //update local storage on change
-    useEffect(() => {
-        localStorage.setItem('database', JSON.stringify(database));
-    }, [database]);
-    useEffect(() => {
-        localStorage.setItem('dailyDiet', JSON.stringify(dailyDiet));
-    }, [dailyDiet]);
+    const [database, setDatabase] = useState({});
+    const [dailyDiet, setDailyDiet] = useState([]);
 
-    const removeFoodEntry = (index) => {
+    // Fetch initial data from server
+    useEffect(() => {
+        fetch('http://localhost:3001/foods')
+            .then(res => res.json())
+            .then(data => setDatabase(data))
+            .catch(err => console.error('Failed to fetch foods:', err));
+
+        fetch('http://localhost:3001/dailyDiet')
+            .then(res => res.json())
+            .then(data => setDailyDiet(data))
+            .catch(err => console.error('Failed to fetch daily diet:', err));
+    }, []);
+
+    const removeFoodEntry = async (index) => {
+        const id = dailyDiet[index].id;
         const newDailyDiet = [...dailyDiet];
         newDailyDiet.splice(index, 1);
         setDailyDiet(newDailyDiet);
+
+        // Delete from server
+        await fetch(`http://localhost:3001/dailyDiet/${id}`, { method: 'DELETE' });
     };
 
-    const removeFoodFromDatabase = (foodName) => {
+    const removeFoodFromDatabase = async (foodName) => {
         const newDatabase = { ...database };
         delete newDatabase[foodName];
         setDatabase(newDatabase);
+
+        // Delete from server
+        await fetch(`http://localhost:3001/foods/${foodName}`, { method: 'DELETE' });
     };
 
     return (
@@ -35,3 +44,5 @@ export const DietProvider = ({ children }) => {
         </DietContext.Provider>
     );
 };
+
+export default DietContext;

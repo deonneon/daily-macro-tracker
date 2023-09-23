@@ -45,3 +45,6 @@ Latest effort.
 sept 10
 I made the sidebar scrollable but it made the tbody and theader columns misaligned. 
 should i also make the daily food list scrollable?
+
+sept 11
+I integrated the AI component but I need to make sure that the response is in the proper format. Sometimes it reports 12 sometimes it reports 12 grams

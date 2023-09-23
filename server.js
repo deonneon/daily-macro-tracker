@@ -1,0 +1,126 @@
+const express = require('express');
+const mysql = require('mysql');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
+const app = express();
+
+
+const corsOptions = {
+    origin: 'http://localhost:3000',  // your frontend server
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
+
+app.use(bodyParser.json());
+
+// Database setup
+// Running the command creatConnection() failed as it would cause a timeout issue ERRORREST paired with listen command
+// swithing to createPool help with keeping that connection alive. 
+const db = mysql.createPool({
+    host: 'srv571.hstgr.io',
+    user: 'u500593804_havenator',
+    password: 'C5up?!EN/',
+    database: 'u500593804_haven'
+});
+
+// API Routes
+
+// Get all foods
+app.get('/foods', (req, res) => {
+    db.query('SELECT * FROM foods', (err, results) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+// Get all daily diets
+app.get('/dailyDiet', (req, res) => {
+    db.query('SELECT * FROM daily_diet', (err, results) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+// Add a new food
+app.post('/foods', (req, res) => {
+    const { name, protein, calories, unit } = req.body;
+    const query = 'INSERT INTO foods (name, protein, calories, unit) VALUES (?, ?, ?, ?)';
+    db.query(query, [name, protein, calories, unit], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.json({ id: result.insertId, name, protein, calories, unit });
+        }
+    });
+});
+
+// Delete a food
+app.delete('/foods/:name', (req, res) => {
+    const { name } = req.params;
+    db.query('DELETE FROM foods WHERE name = ?', [name], (err) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.json({ message: 'Deleted successfully' });
+        }
+    });
+});
+
+// Add a new daily diet entry
+app.post('/dailyDiet', (req, res) => {
+    const { date, food_id } = req.body;
+    const query = 'INSERT INTO daily_diet (date, food_id) VALUES (?, ?)';
+    db.query(query, [date, food_id], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.json({ id: result.insertId, date, food_id });
+        }
+    });
+});
+
+// Delete a daily diet entry
+app.delete('/dailyDiet/:id', (req, res) => {
+    const { id } = req.params;
+    db.query('DELETE FROM daily_diet WHERE id = ?', [id], (err) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.json({ message: 'Deleted successfully' });
+        }
+    });
+});
+
+
+app.get("/", (req, res) => {
+    // listen for the 'close' event on the request
+    req.on("close", () => {
+        console.log("closed connection");
+    });
+
+    console.log(res.socket.destroyed); // true if socket is closed
+});
+
+
+// Start server
+app.listen(3001, () => {
+    console.log('Server running on http://localhost:3001');
+});
+
+
