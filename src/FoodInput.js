@@ -1,26 +1,55 @@
-import React, { useState, useContext, useRef, useEffect } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { DietContext } from './DietContext';
 import './styles.css';
+import AIQueryComponent from './AIQueryComponent';
+
+function getTodayDate() {
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const now = new Date();
+    const year = new Intl.DateTimeFormat('en', { year: 'numeric', timeZone }).format(now);
+    const month = new Intl.DateTimeFormat('en', { month: '2-digit', timeZone }).format(now);
+    const day = new Intl.DateTimeFormat('en', { day: '2-digit', timeZone }).format(now);
+    return `${year}-${month}-${day}`;
+}
+
+const isValidNumberOrBlank = (value) => {
+    return /^(\d+(\.\d+)?)?$/.test(value);
+};
 
 const FoodInput = () => {
-    const { database, setDatabase, dailyDiet, setDailyDiet } = useContext(DietContext);
+    const { database, setDatabase, dailyDiet, setDailyDiet, addFoodToDatabase } = useContext(DietContext);
     const [input, setInput] = useState('');
     const [proteinInput, setProteinInput] = useState('');
     const [calorieInput, setCalorieInput] = useState('');
     const [unitInput, setUnitInput] = useState('');
     const [matchingFoods, setMatchingFoods] = useState([]);
     const [showForm, setShowForm] = useState(false);
+    const [showCancel, setShowCancel] = useState(false);
     const inputRef = useRef(null);
+    const [hideAIResponse, setHideAIResponse] = useState(false);
 
     const handleInputChange = (e) => {
-        setInput(e.target.value);
-        if (e.target.value) {
+        const lowercasedValue = e.target.value.toLowerCase();
+        setInput(lowercasedValue);
+        if (lowercasedValue) {
             const matches = Object.keys(database).filter(food =>
-                food.toLowerCase().includes(e.target.value.toLowerCase())
+                food.toLowerCase().includes(lowercasedValue)
             );
             setMatchingFoods(matches);
         } else {
             setMatchingFoods([]);
+        }
+    };
+
+    const handleProteinInputChange = (e) => {
+        if (isValidNumberOrBlank(e.target.value)) {
+            setProteinInput(e.target.value);
+        }
+    };
+
+    const handleCalorieInputChange = (e) => {
+        if (isValidNumberOrBlank(e.target.value)) {
+            setCalorieInput(e.target.value);
         }
     };
 
@@ -31,29 +60,73 @@ const FoodInput = () => {
     };
 
     const handleAddFood = () => {
-        if (!database[input]) {
-            setShowForm(true);
+        if (input.trim() === '') {
             return;
         }
-        setDailyDiet([...dailyDiet, { name: input, ...database[input] }]);
+
+        const currentDate = getTodayDate();
+        if (!database[input]) {
+            setShowForm(true);
+            setShowCancel(true);
+            return;
+        }
+        setDailyDiet([...dailyDiet, { date: currentDate, name: input, ...database[input] }]);
         setInput('');
     };
 
-    const handleSubmitNewFood = () => {
+    const handleCancel = () => {
+        setShowForm(false);
+        setInput('');
+        setShowCancel(false);
+    };
+
+    const handleKeyDownAdd = (e) => {
+        if (e.key === 'Enter' && input.trim()) {
+            handleAddFood();
+        }
+    };
+
+    const handleSubmitNewFood = async () => {
+        if (input.trim() === '') {
+            return;
+        }
+
+        const currentDate = getTodayDate();
+
+        const newFoodData = {
+            name: input,
+            protein: proteinInput,
+            calories: calorieInput,
+            unit: unitInput,
+        };
+
+        // Add to local state
         setDatabase({
             ...database,
-            [input]: {
-                protein: proteinInput,
-                calories: calorieInput,
-                unit: unitInput
-            }
+            [input]: newFoodData
         });
-        setDailyDiet([...dailyDiet, { name: input, protein: proteinInput, calories: calorieInput, unit: unitInput }]);
+
+        await addFoodToDatabase(newFoodData);
+
+        setDailyDiet([...dailyDiet, { date: currentDate, name: input, protein: proteinInput, calories: calorieInput, unit: unitInput }]);
         setInput('');
         setProteinInput('');
         setCalorieInput('');
         setUnitInput('');
         setShowForm(false);
+        setShowCancel(false);
+        setHideAIResponse(true);
+    };
+
+    const handleAIData = (data) => {
+        if (data) {
+            setInput(data.food_name.toLowerCase() || '');
+            setProteinInput(data.protein || '');
+            setCalorieInput(data.calories || '');
+            setUnitInput(data.measurement || '');
+            setShowForm(true);
+            setHideAIResponse(false)
+        }
     };
 
     return (
@@ -62,6 +135,7 @@ const FoodInput = () => {
                 ref={inputRef}
                 value={input}
                 onChange={handleInputChange}
+                onKeyDown={handleKeyDownAdd}
                 onBlur={() => setTimeout(() => setMatchingFoods([]), 150)}
                 placeholder="Enter food name"
             />
@@ -78,15 +152,21 @@ const FoodInput = () => {
                     ))}
                 </div>
             )}
-            <button onClick={handleAddFood}>Add Food</button>
+            {showCancel ? (
+                <button onClick={handleCancel}>Cancel</button>
+            ) : (
+                <button onClick={handleAddFood} disabled={!input.trim()}>Add Food</button>
+            )}
+
+            <AIQueryComponent onDataReceived={handleAIData} hideResponse={hideAIResponse} />
 
             {showForm && (
                 <div className="showForm">
                     <p>Please fill in as much as possible.</p>
-                    <input value={proteinInput} onChange={(e) => { setProteinInput(e.target.value); }} placeholder="Protein" />
-                    <input value={calorieInput} onChange={(e) => { setCalorieInput(e.target.value); }} placeholder="Calories" />
-                    <input value={unitInput} onChange={(e) => setUnitInput(e.target.value)} placeholder="Unit" />
-                    <button onClick={handleSubmitNewFood} >Submit New Food</button>
+                    <input value={proteinInput} onChange={handleProteinInputChange} placeholder="Protein" />
+                    <input value={calorieInput} onChange={handleCalorieInputChange} placeholder="Calories" />
+                    <input value={unitInput} onChange={(e) => setUnitInput(e.target.value)} placeholder="Unit of Measurement" />
+                    <button onClick={handleSubmitNewFood} disabled={!input.trim()}>Submit New Food</button>
                 </div>
             )}
         </div>

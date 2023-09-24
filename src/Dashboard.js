@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { DietContext } from './DietContext';
 import { Line } from 'react-chartjs-2';
+// eslint-disable-next-line 
 import Chart from 'chart.js/auto';
 
 
@@ -70,6 +71,8 @@ export default Dashboard;
 const options = {
     responsive: true,
     maintainAspectRatio: false,
+    borderWidth: 1,
+    borderDash: [5, 15],
     title: {
         display: true,
         position: 'top',
@@ -83,7 +86,7 @@ const options = {
     scales: {
         x: {
             ticks: {
-                display: true  // This hides the tick labels, not the axis label
+                display: true,
             },
             gridLines: {
                 display: false  // This hides the grid lines for the y-axis

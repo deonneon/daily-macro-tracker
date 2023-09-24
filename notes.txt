@@ -11,17 +11,40 @@ maybe
 scrolling down shows previous days sheet. though the scrolling has to snap.
 while sidebar stays fixed.
 
-should i make the sidebar scrollable? should i make a recent filter? 
+should i make a recent filter? 
 or the top for favorites?
-should i make cute icons like for rice?
-over button i should have hovertip saying rice - 1 cup
 
-add units to protein.
-
-Delete function
-have a trashcan button
-when click, a bunch of x appears to the left of the item on the list. clicking the button deletes that item. 
-
-
-have an ai component that searches for your description.
 use openfoodfact api to pull information about food that are branded.
+
+when filling food form, tags to attach shows up.
+add a suggested amount for each input using either ai or a prefilled sheet right below inputs.
+
+
+Break Q&A Page into general questions about macro tracking. have another section for concern. 
+like organic vs inorganic is a concern. 
+maybe integrate that while adding food. 
+
+
+To make the diet column look cleaner, instead of listing the dates, list one date and skip the others.
+
+Maybe add a database for predefined foodset.
+
+Add goal line for dashboard.
+
+I need a way to clear the list of food for that day.
+what if you accidentally log for the wrong date? Maybe there is a way to click selected and move
+
+add by me a coffee link.
+
+
+built by deon moves when it should be fixed regardless if iconbutton is present
+
+
+
+Latest effort.
+sept 10
+I made the sidebar scrollable but it made the tbody and theader columns misaligned. 
+should i also make the daily food list scrollable?
+
+sept 11
+I integrated the AI component but I need to make sure that the response is in the proper format. Sometimes it reports 12 sometimes it reports 12 grams

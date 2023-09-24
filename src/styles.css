@@ -14,11 +14,12 @@
 .sidebar {
     flex: 1;
     border-left: 1px solid #ccc;
-    padding: 20px;
+    padding: 20px 50px;
     height: 100vh;
     overflow-y: auto;
     box-sizing: border-box;
 }
+
 
 th {
     text-align: left;
@@ -34,7 +35,7 @@ td {
 .food-dropdown {
     border: 1px solid #ccc;
     position: absolute;
-    zIndex: 1;
+    z-index: 1;
     background: #fff;
     max-height: 150px;
     overflow-y: auto;
@@ -95,14 +96,16 @@ td {
 }
 
 .icon-button {
-    width: 50px;
+    width: 40px;
     /* Or whatever size you want */
-    height: 50px;
+    height: 40px;
     background-color: transparent;
     border: none;
     cursor: pointer;
     border: solid rgb(170, 170, 170);
     margin: 5px;
+    border-radius: 10px;
+    box-shadow: 2px 3px gray;
 }
 
 .icon-button img {
@@ -112,4 +115,91 @@ td {
     /* Makes the image take the full height of the button */
     object-fit: contain;
     /* Adjusts the image's size and position to fill its box, often used with responsive designs */
+}
+
+.iconbar {
+    margin: 10px 0px;
+}
+
+.right-align {
+    text-align: right;
+}
+
+
+.sidebar-foodlist {
+    height: 75vh;
+}
+
+/* Set tbody to be scrollable and provide a maximum height */
+.sidebar-foodlist tbody {
+    display: block;
+    max-height: 65vh;
+    /* Adjust this value based on your needs */
+    overflow-y: auto;
+}
+
+/* Make other table parts block display so they line up correctly */
+.sidebar-foodlist thead,
+.sidebar-foodlist tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* This will be required to make the table take full width */
+.sidebar-foodlist table {
+    width: 100%;
+}
+
+.credits {
+    text-align: right;
+}
+
+.qa-card {
+    border-bottom: solid lightgray;
+    list-style-type: none
+}
+
+.qa-container {
+    display: flex;
+    justify-content: space-between;
+    height: 100vh;
+    padding: 15px 50px 20px 50px;
+    box-sizing: border-box;
+}
+
+.foodRow .trashIcon {
+    visibility: hidden;
+}
+
+.foodRow:hover .trashIcon {
+    visibility: visible;
+}
+
+
+table {
+    /* This removes flickering of trashcan button across column of same row*/
+    border-collapse: collapse;
+}
+
+
+.askAIButton {
+    margin-left: 10px;
+}
+
+.foodDescriptionForAI {
+    padding-top: 10px;
+}
+
+.foodDescriptionForAI input {
+    height: 50px;
+    width: 300px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+}
+
+.ai-response {
+    padding-top: 10px;
 }
