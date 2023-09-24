@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { DietContext } from './DietContext';
 import './styles.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function getTodayDate() {
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -14,14 +16,11 @@ function getTodayDate() {
 }
 
 const DatabasePage = () => {
-    const { database, dailyDiet, setDailyDiet } = useContext(DietContext);
+    const { database, removeFoodFromDatabase, addFoodEntryToDailyDiet } = useContext(DietContext);
 
     const handleFoodClick = (foodName) => {
-        const foodDetails = database[foodName];
-        const updatedDailyDiet = [...dailyDiet, { ...foodDetails, name: foodName, date: getTodayDate() }];
-
-        setDailyDiet(updatedDailyDiet);
-        localStorage.setItem('dailyDiet', JSON.stringify(updatedDailyDiet));
+        const foodDetails = { ...database[foodName], name: foodName };
+        addFoodEntryToDailyDiet(foodDetails, getTodayDate());
     };
 
     return (
@@ -38,11 +37,14 @@ const DatabasePage = () => {
                 </thead>
                 <tbody>
                     {Object.entries(database).map(([foodName, foodDetails]) => (
-                        <tr key={foodName} onClick={() => handleFoodClick(foodName)} style={{ cursor: 'pointer' }}>
+                        <tr key={foodName} className="foodRow" onClick={() => handleFoodClick(foodName)} style={{ cursor: 'pointer' }}>
                             <td>{foodName}</td>
                             <td className="right-align">{foodDetails.protein}</td>
                             <td className="right-align">{foodDetails.calories}</td>
                             <td>{foodDetails.unit}</td>
+                            <td>
+                                <FontAwesomeIcon className="trashIcon" icon={faTrash} onClick={(e) => { e.stopPropagation(); removeFoodFromDatabase(foodName); }} style={{ cursor: 'pointer' }} />
+                            </td>
                         </tr>
                     ))}
                 </tbody>
