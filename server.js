@@ -7,7 +7,7 @@ const app = express();
 
 
 const corsOptions = {
-    origin: 'http://localhost:3000',  // your frontend server
+    origin: 'http://localhost:3000',  // my frontend server
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204
@@ -43,7 +43,12 @@ app.get('/foods', (req, res) => {
 
 // Get all daily diets
 app.get('/dailyDiet', (req, res) => {
-    db.query('SELECT * FROM daily_diet', (err, results) => {
+    const query = `
+        SELECT dailyDiet.id, DATE_FORMAT(dailyDiet.date, "%Y-%m-%d") as date, foods.name, foods.protein, foods.calories, foods.unit
+        FROM dailyDiet
+        JOIN foods ON dailyDiet.food_id = foods.id
+    `;
+    db.query(query, (err, results) => {
         if (err) {
             console.log(err);
             res.status(500).send('Internal Server Error');
@@ -83,7 +88,7 @@ app.delete('/foods/:name', (req, res) => {
 // Add a new daily diet entry
 app.post('/dailyDiet', (req, res) => {
     const { date, food_id } = req.body;
-    const query = 'INSERT INTO daily_diet (date, food_id) VALUES (?, ?)';
+    const query = 'INSERT INTO dailyDiet (date, food_id) VALUES (?, ?)';
     db.query(query, [date, food_id], (err, result) => {
         if (err) {
             console.log(err);
@@ -97,7 +102,7 @@ app.post('/dailyDiet', (req, res) => {
 // Delete a daily diet entry
 app.delete('/dailyDiet/:id', (req, res) => {
     const { id } = req.params;
-    db.query('DELETE FROM daily_diet WHERE id = ?', [id], (err) => {
+    db.query('DELETE FROM dailyDiet WHERE id = ?', [id], (err) => {
         if (err) {
             console.log(err);
             res.status(500).send('Internal Server Error');

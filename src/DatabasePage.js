@@ -16,13 +16,11 @@ function getTodayDate() {
 }
 
 const DatabasePage = () => {
-    const { database, dailyDiet, setDailyDiet, removeFoodFromDatabase } = useContext(DietContext);
+    const { database, removeFoodFromDatabase, addFoodEntryToDailyDiet } = useContext(DietContext);
 
     const handleFoodClick = (foodName) => {
-        const foodDetails = database[foodName];
-        const updatedDailyDiet = [...dailyDiet, { ...foodDetails, name: foodName, date: getTodayDate() }];
-
-        setDailyDiet(updatedDailyDiet);
+        const foodDetails = { ...database[foodName], name: foodName };
+        addFoodEntryToDailyDiet(foodDetails, getTodayDate());
     };
 
     return (

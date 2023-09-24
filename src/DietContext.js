@@ -10,7 +10,18 @@ export const DietProvider = ({ children }) => {
     useEffect(() => {
         fetch('http://localhost:3001/foods')
             .then(res => res.json())
-            .then(data => setDatabase(data))
+            .then(data => {
+                const transformedData = {};
+                data.forEach(item => {
+                    transformedData[item.name] = {
+                        id: item.id,
+                        protein: item.protein,
+                        calories: item.calories,
+                        unit: item.unit
+                    };
+                });
+                setDatabase(transformedData);
+            })
             .catch(err => console.error('Failed to fetch foods:', err));
 
         fetch('http://localhost:3001/dailyDiet')
@@ -38,8 +49,39 @@ export const DietProvider = ({ children }) => {
         await fetch(`http://localhost:3001/foods/${foodName}`, { method: 'DELETE' });
     };
 
+    const addFoodToDatabase = async (foodData) => {
+        const response = await fetch('http://localhost:3001/foods', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(foodData),
+        });
+        const data = await response.json();
+        setDatabase({ ...database, [foodData.name]: data });
+    };
+
+    const addFoodEntryToDailyDiet = async (foodDetails, date) => {
+        const response = await fetch('http://localhost:3001/dailyDiet', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                date,
+                food_id: foodDetails.id
+            }),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            const newEntry = { ...foodDetails, date, id: data.id };
+            setDailyDiet(prevDailyDiet => [...prevDailyDiet, newEntry]);
+        }
+    };
+
     return (
-        <DietContext.Provider value={{ database, setDatabase, dailyDiet, setDailyDiet, removeFoodEntry, removeFoodFromDatabase }}>
+        <DietContext.Provider value={{ database, setDatabase, dailyDiet, setDailyDiet, removeFoodEntry, removeFoodFromDatabase, addFoodToDatabase, addFoodEntryToDailyDiet }}>
             {children}
         </DietContext.Provider>
     );

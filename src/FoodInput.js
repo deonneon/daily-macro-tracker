@@ -17,7 +17,7 @@ const isValidNumberOrBlank = (value) => {
 };
 
 const FoodInput = () => {
-    const { database, setDatabase, dailyDiet, setDailyDiet } = useContext(DietContext);
+    const { database, setDatabase, dailyDiet, setDailyDiet, addFoodToDatabase } = useContext(DietContext);
     const [input, setInput] = useState('');
     const [proteinInput, setProteinInput] = useState('');
     const [calorieInput, setCalorieInput] = useState('');
@@ -86,20 +86,28 @@ const FoodInput = () => {
         }
     };
 
-    const handleSubmitNewFood = () => {
+    const handleSubmitNewFood = async () => {
         if (input.trim() === '') {
             return;
         }
 
         const currentDate = getTodayDate();
+
+        const newFoodData = {
+            name: input,
+            protein: proteinInput,
+            calories: calorieInput,
+            unit: unitInput,
+        };
+
+        // Add to local state
         setDatabase({
             ...database,
-            [input]: {
-                protein: proteinInput,
-                calories: calorieInput,
-                unit: unitInput
-            }
+            [input]: newFoodData
         });
+
+        await addFoodToDatabase(newFoodData);
+
         setDailyDiet([...dailyDiet, { date: currentDate, name: input, protein: proteinInput, calories: calorieInput, unit: unitInput }]);
         setInput('');
         setProteinInput('');
