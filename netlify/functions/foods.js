@@ -13,21 +13,11 @@ exports.handler = async function (event, context) {
             if (err) {
                 resolve({
                     statusCode: 500,
-                    headers: {
-                        "Access-Control-Allow-Origin": "http://localhost:3000",
-                        "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-                        "Access-Control-Allow-Credentials": "true",
-                    },
                     body: JSON.stringify({ error: 'Internal Server Error' }),
                 });
             } else {
                 resolve({
                     statusCode: 200,
-                    headers: {
-                        "Access-Control-Allow-Origin": "http://localhost:3000",
-                        "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-                        "Access-Control-Allow-Credentials": "true",
-                    },
                     body: JSON.stringify(results),
                 });
             }
