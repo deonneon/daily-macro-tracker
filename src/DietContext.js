@@ -8,7 +8,7 @@ export const DietProvider = ({ children }) => {
 
     // Fetch initial data from server
     useEffect(() => {
-        fetch('http://localhost:3001/foods')
+        fetch('https://main--shimmering-figolla-53e06a.netlify.app/api/foods')
             .then(res => res.json())
             .then(data => {
                 const transformedData = {};
@@ -24,7 +24,7 @@ export const DietProvider = ({ children }) => {
             })
             .catch(err => console.error('Failed to fetch foods:', err));
 
-        fetch('http://localhost:3001/dailyDiet')
+        fetch('https://main--shimmering-figolla-53e06a.netlify.app/api/dailyDiet')
             .then(res => res.json())
             .then(data => setDailyDiet(data))
             .catch(err => console.error('Failed to fetch daily diet:', err));
@@ -37,7 +37,7 @@ export const DietProvider = ({ children }) => {
         setDailyDiet(newDailyDiet);
 
         // Delete from server
-        await fetch(`http://localhost:3001/dailyDiet/${id}`, { method: 'DELETE' });
+        await fetch(`https://main--shimmering-figolla-53e06a.netlify.app/api/dailyDiet/${id}`, { method: 'DELETE' });
     };
 
     const removeFoodFromDatabase = async (foodName) => {
@@ -46,11 +46,11 @@ export const DietProvider = ({ children }) => {
         setDatabase(newDatabase);
 
         // Delete from server
-        await fetch(`http://localhost:3001/foods/${foodName}`, { method: 'DELETE' });
+        await fetch(`https://main--shimmering-figolla-53e06a.netlify.app/api/foods/${foodName}`, { method: 'DELETE' });
     };
 
     const addFoodToDatabase = async (foodData) => {
-        const response = await fetch('http://localhost:3001/foods', {
+        const response = await fetch('https://main--shimmering-figolla-53e06a.netlify.app/api/foods', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export const DietProvider = ({ children }) => {
     };
 
     const addFoodEntryToDailyDiet = async (foodDetails, date) => {
-        const response = await fetch('http://localhost:3001/dailyDiet', {
+        const response = await fetch('https://main--shimmering-figolla-53e06a.netlify.app/api/dailyDiet', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
