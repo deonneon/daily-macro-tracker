@@ -21,10 +21,10 @@ app.use(bodyParser.json());
 // Running the command creatConnection() failed as it would cause a timeout issue ERRORREST paired with listen command
 // swithing to createPool help with keeping that connection alive. 
 const db = mysql.createPool({
-    host: 'srv571.hstgr.io',
-    user: 'u500593804_havenator',
-    password: 'C5up?!EN/',
-    database: 'u500593804_haven'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
 });
 
 // API Routes
