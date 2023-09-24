@@ -18,7 +18,7 @@ const db = mysql.createPool({
 
 const router = Router();
 
-router.get('/foods', (req, res) => {
+router.get('/foods1', (req, res) => {
     db.query('SELECT * FROM foods', (err, results) => {
         if (err) {
             console.log(err);
@@ -29,7 +29,7 @@ router.get('/foods', (req, res) => {
     });
 });
 
-router.get('/dailyDiet', (req, res) => {
+router.get('/dailyDiet1', (req, res) => {
     const query = `
     SELECT dailyDiet.id, DATE_FORMAT(dailyDiet.date, "%Y-%m-%d") as date, foods.name, foods.protein, foods.calories, foods.unit
     FROM dailyDiet
@@ -45,7 +45,7 @@ router.get('/dailyDiet', (req, res) => {
     });
 });
 
-router.post('/foods', (req, res) => {
+router.post('/foods1', (req, res) => {
     const { name, protein, calories, unit } = req.body;
     const query = 'INSERT INTO foods (name, protein, calories, unit) VALUES (?, ?, ?, ?)';
     db.query(query, [name, protein, calories, unit], (err, result) => {
@@ -58,7 +58,7 @@ router.post('/foods', (req, res) => {
     });
 });
 
-router.delete('/foods/:name', (req, res) => {
+router.delete('/foods1/:name', (req, res) => {
     const { name } = req.params;
     db.query('DELETE FROM foods WHERE name = ?', [name], (err) => {
         if (err) {
@@ -70,7 +70,7 @@ router.delete('/foods/:name', (req, res) => {
     });
 });
 
-router.post('/dailyDiet', (req, res) => {
+router.post('/dailyDiet1', (req, res) => {
     const { date, food_id } = req.body;
     const query = 'INSERT INTO dailyDiet (date, food_id) VALUES (?, ?)';
     db.query(query, [date, food_id], (err, result) => {
@@ -83,7 +83,7 @@ router.post('/dailyDiet', (req, res) => {
     });
 });
 
-router.delete('/dailyDiet/:id', (req, res) => {
+router.delete('/dailyDiet1/:id', (req, res) => {
     const { id } = req.params;
     db.query('DELETE FROM dailyDiet WHERE id = ?', [id], (err) => {
         if (err) {
