@@ -132,6 +132,7 @@ const FoodInput = () => {
     return (
         <div className="foodInput">
             <input
+                name="foodInputName"
                 ref={inputRef}
                 value={input}
                 onChange={handleInputChange}
