@@ -1,11 +1,23 @@
 import express, { Router } from 'express';
 import serverless from 'serverless-http';
 import mysql from 'mysql';
+import cors from 'cors';
 
 const api = express();
 
+const corsOptions = {
+    origin: 'https://shimmering-figolla-53e06a.netlify.app',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204,
+};
+
+api.use(cors(corsOptions));
+
 const router = Router();
 router.get('/hello', (req, res) => res.send('Hello World!'));
+
+
 
 const db = mysql.createPool({
     host: process.env.DB_HOST,
