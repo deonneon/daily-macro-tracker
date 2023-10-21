@@ -9,4 +9,4 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self';"
+  Content-Security-Policy = "default-src 'self'; connect-src 'self' https://main--shimmering-figolla-53e06a.netlify.app/api/*"
