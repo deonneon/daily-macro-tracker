@@ -9,4 +9,4 @@
 [[headers]]
   for = "/*"
   [headers.values]
-  Content-Security-Policy = "default-src 'self'; connect-src 'self' https://main--shimmering-figolla-53e06a.netlify.app/api/*;connect-src 'self' https://main--shimmering-figolla-53e06a.netlify.app/api/foods; connect-src 'self' https://main--shimmering-figolla-53e06a.netlify.app/api/dailyDiet"
+  Content-Security-Policy = "default-src 'self'; connect-src 'self' https://main--shimmering-figolla-53e06a.netlify.app/api/foods; connect-src 'self' https://main--shimmering-figolla-53e06a.netlify.app/api/dailyDiet"
