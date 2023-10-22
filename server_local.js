@@ -1,30 +1,36 @@
-import express, { Router } from 'express';
-import serverless from 'serverless-http';
-import mysql from 'mysql';
-import cors from 'cors';
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const mysql = require('mysql')
+require('dotenv').config()
 
-const api = express();
+const app = express();
+
+app.use(cors());
+app.use(bodyParser.json());
 
 const corsOptions = {
-    origin: 'https://shimmering-figolla-53e06a.netlify.app',
+    origin: 'http://localhost:3000',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,
 };
 
-api.use(cors(corsOptions));
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
 
-const router = Router();
-router.get('/hello', (req, res) => res.send('Hello World!'));
-
+// Database setup
 const db = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
+    database: process.env.DB_DATABASE,
 });
 
-router.get('/foods', (req, res) => {
+// API Routes
+
+// Get all foods
+app.get('/foods', (req, res) => {
     db.query('SELECT * FROM foods', (err, results) => {
         if (err) {
             console.log(err);
@@ -35,7 +41,8 @@ router.get('/foods', (req, res) => {
     });
 });
 
-router.get('/dailyDiet', (req, res) => {
+// Get all daily diets
+app.get('/dailyDiet', (req, res) => {
     const query = `
     SELECT dailyDiet.id, DATE_FORMAT(dailyDiet.date, "%Y-%m-%d") as date, foods.name, foods.protein, foods.calories, foods.unit
     FROM dailyDiet
@@ -51,7 +58,8 @@ router.get('/dailyDiet', (req, res) => {
     });
 });
 
-router.post('/foods', (req, res) => {
+// Add a new food (Mock)
+app.post('/foods', (req, res) => {
     const { name, protein, calories, unit } = req.body;
     const query = 'INSERT INTO foods (name, protein, calories, unit) VALUES (?, ?, ?, ?)';
     db.query(query, [name, protein, calories, unit], (err, result) => {
@@ -64,7 +72,8 @@ router.post('/foods', (req, res) => {
     });
 });
 
-router.delete('/foods/:name', (req, res) => {
+// Delete a food (Mock)
+app.delete('/foods/:name', (req, res) => {
     const { name } = req.params;
     db.query('DELETE FROM foods WHERE name = ?', [name], (err) => {
         if (err) {
@@ -76,7 +85,8 @@ router.delete('/foods/:name', (req, res) => {
     });
 });
 
-router.post('/dailyDiet', (req, res) => {
+// Add a new daily diet entry (Mock)
+app.post('/dailyDiet', (req, res) => {
     const { date, food_id } = req.body;
     const query = 'INSERT INTO dailyDiet (date, food_id) VALUES (?, ?)';
     db.query(query, [date, food_id], (err, result) => {
@@ -89,7 +99,8 @@ router.post('/dailyDiet', (req, res) => {
     });
 });
 
-router.delete('/dailyDiet/:id', (req, res) => {
+// Delete a daily diet entry (Mock)
+app.delete('/dailyDiet/:id', (req, res) => {
     const { id } = req.params;
     db.query('DELETE FROM dailyDiet WHERE id = ?', [id], (err) => {
         if (err) {
@@ -101,6 +112,8 @@ router.delete('/dailyDiet/:id', (req, res) => {
     });
 });
 
-api.use('/api/', router);
+// Start server
+app.listen(3001, () => {
+    console.log('Server running on http://localhost:3001');
+});
 
-export const handler = serverless(api);

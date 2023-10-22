@@ -5,13 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function getTodayDate() {
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const now = new Date();
-
-    const year = new Intl.DateTimeFormat('en', { year: 'numeric', timeZone }).format(now);
-    const month = new Intl.DateTimeFormat('en', { month: '2-digit', timeZone }).format(now);
-    const day = new Intl.DateTimeFormat('en', { day: '2-digit', timeZone }).format(now);
-
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');  // months are 0-based in JavaScript
+    const day = String(today.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
 }
 
@@ -19,8 +16,11 @@ const DatabasePage = () => {
     const { database, removeFoodFromDatabase, addFoodEntryToDailyDiet } = useContext(DietContext);
 
     const handleFoodClick = (foodName) => {
+        console.log(getTodayDate());
         const foodDetails = { ...database[foodName], name: foodName };
-        addFoodEntryToDailyDiet(foodDetails, getTodayDate());
+        const food_id = foodDetails.id;  // Update this line to use 'id' instead of 'food_id'
+        addFoodEntryToDailyDiet(food_id, getTodayDate());
+
     };
 
     return (
