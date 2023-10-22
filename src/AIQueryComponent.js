@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import OpenAI from "openai";
-
 
 const AIQueryComponent = ({ onDataReceived, hideResponse }) => {
     const [showAIInput, setShowAIInput] = useState(false);
@@ -12,59 +10,31 @@ const AIQueryComponent = ({ onDataReceived, hideResponse }) => {
     };
 
     const handleSubmitToAI = async () => {
+        setAiResponse('Fetching data...');
         try {
-            setAiResponse('Fetching data...');
-            const openai = new OpenAI({
-                apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-                dangerouslyAllowBrowser: true,
+            const response = await fetch('/.netlify/functions/query-openai', {
+                method: 'POST',
+                body: JSON.stringify({ aiInputText }),
+                headers: { 'Content-Type': 'application/json' },
             });
-
-            const response = await openai.chat.completions.create({
-                model: "gpt-3.5-turbo",
-                messages: [
-                    {
-                        "role": "system",
-                        "content": "You are a food nutritionist who knows the protein and calorie specifications of all food."
-                    },
-                    {
-                        "role": "user",
-                        "content": `What are the macros of a ${aiInputText}? Write a json dictionary with four keys and their values: food_name, protein, calories, and measurement.`
-                    }
-                ],
-                temperature: 1,
-                max_tokens: 256,
-                top_p: 1,
-                frequency_penalty: 0,
-                presence_penalty: 0,
-            });
-
-            if (response && response.choices && response.choices[0]) {
-                const aiOutput = response.choices[0].message.content;
-                let data;
-                try {
-                    data = JSON.parse(aiOutput);
-                } catch (error) {
-                    console.error("Failed to parse AI response:", aiOutput);
-                    setAiResponse("Error parsing data from OpenAI.");
-                }
-                if (data) {
-                    setAiResponse(aiOutput);
-                    onDataReceived(data); // This will send the data up to FoodInput
-                }
+            if (response.ok) {
+                const aiOutput = await response.json();
+                setAiResponse(aiOutput);
+                onDataReceived(aiOutput);  // assuming aiOutput is in the expected format
             } else {
-                console.error("Unexpected response format:", response);
+                console.error("Error fetching data from OpenAI:", response.statusText);
                 setAiResponse("Error fetching data from OpenAI.");
             }
-
-
+        } catch (error) {
+            console.error("Error with OpenAI:", error);
+            setAiResponse("Error with OpenAI.");
+        } finally {
             // Clear the input text and hide the AI input field
             setAIInputText('');
             setShowAIInput(false);
-
-        } catch (error) {
-            console.error("Error with OpenAI:", error);
         }
     };
+
 
     const handleKeyDownAI = (e) => {
         if (e.key === 'Enter' && aiInputText.trim()) {
