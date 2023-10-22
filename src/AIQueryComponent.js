@@ -10,61 +10,61 @@ const AIQueryComponent = ({ onDataReceived, hideResponse }) => {
     };
 
     const handleSubmitToAI = async () => {
-        setAiResponse('Fetching data...');
         try {
-            const response = await fetch('/.netlify/functions/query-openai', {
+            setAiResponse('Fetching data...');
+            const response = await fetch('/.netlify/functions/openai', {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify({ aiInputText }),
-                headers: { 'Content-Type': 'application/json' },
             });
+            const data = await response.json();
             if (response.ok) {
-                const aiOutput = await response.json();
-                setAiResponse(aiOutput);
-                onDataReceived(aiOutput);  // assuming aiOutput is in the expected format
+                setAiResponse(data);
+                onDataReceived(JSON.parse(data));  // Assumes that data is a JSON string.
             } else {
-                console.error("Error fetching data from OpenAI:", response.statusText);
+                console.error("Error fetching data from OpenAI:", data.error);
                 setAiResponse("Error fetching data from OpenAI.");
             }
-        } catch (error) {
-            console.error("Error with OpenAI:", error);
-            setAiResponse("Error with OpenAI.");
-        } finally {
-            // Clear the input text and hide the AI input field
+
             setAIInputText('');
             setShowAIInput(false);
+
+        } catch (error) {
+            console.error("Error:", error);
         }
+
+
+        const handleKeyDownAI = (e) => {
+            if (e.key === 'Enter' && aiInputText.trim()) {
+                handleSubmitToAI();
+            }
+        };
+
+        return (
+            <>
+                <button className="askAIButton" onClick={() => setShowAIInput(!showAIInput)}>Ask AI</button>
+
+                {showAIInput && (
+                    <div className='foodDescriptionForAI'>
+                        <input
+                            value={aiInputText}
+                            onChange={handleAIInputChange}
+                            onKeyDown={handleKeyDownAI}
+                            placeholder="Please describe the food as detailed as possible."
+                        />
+                        <button onClick={handleSubmitToAI} disabled={!aiInputText.trim()}>Submit</button>
+                    </div>
+                )}
+
+                {!hideResponse && (
+                    <div className="ai-response">
+                        {aiResponse}
+                    </div>
+                )}
+            </>
+        );
     };
 
-
-    const handleKeyDownAI = (e) => {
-        if (e.key === 'Enter' && aiInputText.trim()) {
-            handleSubmitToAI();
-        }
-    };
-
-    return (
-        <>
-            <button className="askAIButton" onClick={() => setShowAIInput(!showAIInput)}>Ask AI</button>
-
-            {showAIInput && (
-                <div className='foodDescriptionForAI'>
-                    <input
-                        value={aiInputText}
-                        onChange={handleAIInputChange}
-                        onKeyDown={handleKeyDownAI}
-                        placeholder="Please describe the food as detailed as possible."
-                    />
-                    <button onClick={handleSubmitToAI} disabled={!aiInputText.trim()}>Submit</button>
-                </div>
-            )}
-
-            {!hideResponse && (
-                <div className="ai-response">
-                    {aiResponse}
-                </div>
-            )}
-        </>
-    );
-};
-
-export default AIQueryComponent;
+    export default AIQueryComponent;
