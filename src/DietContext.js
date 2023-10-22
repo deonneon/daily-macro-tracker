@@ -62,6 +62,7 @@ export const DietProvider = ({ children }) => {
     };
 
     const addFoodEntryToDailyDiet = async (foodDetails, date) => {
+        console.log({ date, food_id: foodDetails.id });
         const response = await fetch('https://main--shimmering-figolla-53e06a.netlify.app/api/dailyDiet', {
             method: 'POST',
             headers: {
