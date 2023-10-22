@@ -27,44 +27,43 @@ const AIQueryComponent = ({ onDataReceived, hideResponse }) => {
                 console.error("Error fetching data from OpenAI:", data.error);
                 setAiResponse("Error fetching data from OpenAI.");
             }
-
             setAIInputText('');
             setShowAIInput(false);
-
         } catch (error) {
             console.error("Error:", error);
         }
-
-
-        const handleKeyDownAI = (e) => {
-            if (e.key === 'Enter' && aiInputText.trim()) {
-                handleSubmitToAI();
-            }
-        };
-
-        return (
-            <>
-                <button className="askAIButton" onClick={() => setShowAIInput(!showAIInput)}>Ask AI</button>
-
-                {showAIInput && (
-                    <div className='foodDescriptionForAI'>
-                        <input
-                            value={aiInputText}
-                            onChange={handleAIInputChange}
-                            onKeyDown={handleKeyDownAI}
-                            placeholder="Please describe the food as detailed as possible."
-                        />
-                        <button onClick={handleSubmitToAI} disabled={!aiInputText.trim()}>Submit</button>
-                    </div>
-                )}
-
-                {!hideResponse && (
-                    <div className="ai-response">
-                        {aiResponse}
-                    </div>
-                )}
-            </>
-        );
     };
 
-    export default AIQueryComponent;
+
+    const handleKeyDownAI = (e) => {
+        if (e.key === 'Enter' && aiInputText.trim()) {
+            handleSubmitToAI();
+        }
+    };
+
+    return (
+        <>
+            <button className="askAIButton" onClick={() => setShowAIInput(!showAIInput)}>Ask AI</button>
+
+            {showAIInput && (
+                <div className='foodDescriptionForAI'>
+                    <input
+                        value={aiInputText}
+                        onChange={handleAIInputChange}
+                        onKeyDown={handleKeyDownAI}
+                        placeholder="Please describe the food as detailed as possible."
+                    />
+                    <button onClick={handleSubmitToAI} disabled={!aiInputText.trim()}>Submit</button>
+                </div>
+            )}
+
+            {!hideResponse && (
+                <div className="ai-response">
+                    {aiResponse}
+                </div>
+            )}
+        </>
+    );
+};
+
+export default AIQueryComponent;
