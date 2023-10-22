@@ -69,7 +69,7 @@ export const DietProvider = ({ children }) => {
             },
             body: JSON.stringify({
                 date,
-                food_id: foodDetails.id
+                food_id: foodDetails.id  // This line uses the id property from foodDetails
             }),
         });
 
