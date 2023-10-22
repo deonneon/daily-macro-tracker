@@ -1,13 +1,10 @@
-// netlify/functions/query-openai.js
-
 const OpenAI = require('openai');
 
-const openai = new OpenAI(process.env.OPENAI_API_KEY);
-
 exports.handler = async function (event, context) {
-    const { aiInputText } = JSON.parse(event.body);
-
     try {
+        const body = JSON.parse(event.body);
+        const aiInputText = body.aiInputText;
+        const openai = new OpenAI(process.env.OPENAI_API_KEY);
         const response = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
             messages: [
@@ -26,15 +23,14 @@ exports.handler = async function (event, context) {
             frequency_penalty: 0,
             presence_penalty: 0,
         });
-
         return {
             statusCode: 200,
-            body: JSON.stringify(response.choices[0].message.content)
+            body: JSON.stringify(response.choices[0].message.content),
         };
     } catch (error) {
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: error.message })
+            body: JSON.stringify({ error: error.message }),
         };
     }
 };
