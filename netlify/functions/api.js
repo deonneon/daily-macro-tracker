@@ -79,6 +79,7 @@ router.delete('/foods/:name', (req, res) => {
 });
 
 router.post('/dailyDiet', (req, res) => {
+    console.log(req.body);  // Debug line
     const { date, food_id } = req.body;
     const query = 'INSERT INTO dailyDiet (date, food_id) VALUES (?, ?)';
     db.query(query, [date, food_id], (err, result) => {
