@@ -4,7 +4,7 @@ import mysql from 'mysql';
 import cors from 'cors';
 
 const api = express();
-
+api.use(express.json());
 const corsOptions = {
     origin: 'https://shimmering-figolla-53e06a.netlify.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
