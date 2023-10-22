@@ -19,7 +19,9 @@ const DatabasePage = () => {
     const { database, removeFoodFromDatabase, addFoodEntryToDailyDiet } = useContext(DietContext);
 
     const handleFoodClick = (foodName) => {
+        console.log(getTodayDate());
         const foodDetails = { ...database[foodName], name: foodName, id: database[foodName].id };
+        console.log(foodDetails);
         addFoodEntryToDailyDiet(foodDetails, getTodayDate());
     };
 
