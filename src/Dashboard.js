@@ -2,9 +2,8 @@ import React, { useContext } from 'react';
 import { DietContext } from './DietContext';
 import { Line } from 'react-chartjs-2';
 // eslint-disable-next-line 
-import { Chart, registerables } from 'chart.js';
-import annotationPlugin from 'chartjs-plugin-annotation';
-Chart.register(...registerables, annotationPlugin);
+import Chart from 'chart.js/auto';
+
 
 const Dashboard = () => {
     const { dailyDiet } = useContext(DietContext);
@@ -53,79 +52,6 @@ const Dashboard = () => {
         ]
     };
 
-    const options = {
-        responsive: true,
-        maintainAspectRatio: false,
-        borderWidth: 1,
-        borderDash: [5, 15],
-        title: {
-            display: true,
-            position: 'top',
-            text: 'Your Chart Title Here'  // Replace this with your desired title
-        },
-        plugins: {
-            legend: {
-                display: false
-            },
-            annotation: {
-                annotations: calorieValues.map((value, index) => ({
-                  type: 'label',
-                  xValue: index,
-                  yValue: value,
-                  content: `${value}`,
-                  backgroundColor: 'rgba(0,0,0,0)', // transparent background
-                  borderColor: 'rgba(0,0,0,0)', // transparent border
-                  yAdjust: -10, // adjust the position above the line
-                  font: {
-                    size: 12,
-                    weight: 'bold'
-                  },
-                  color: 'rgb(75, 192, 192)', // text color
-                })),
-              },
-        },
-        scales: {
-            x: {
-                ticks: {
-                    display: true,
-                },
-                gridLines: {
-                    display: false  // This hides the grid lines for the y-axis
-                },
-                grid: {
-                    drawBorder: false,
-                    lineWidth: 0 // <-- this removes vertical lines between bars
-                },
-                scaleLabel: {
-                    display: false  // This hides the axis label itself
-                }
-            },
-            y: {
-                ticks: {
-                    display: true,
-                    // Ensuring only integer values are displayed
-                    callback: function (value) {
-                        if (value % 1 === 0) {
-                            return value;
-                        }
-                    }
-                },
-                gridLines: {
-                    display: false  // This hides the grid lines for the y-axis
-                },
-                grid: {
-                    drawBorder: false,
-                    lineWidth: 0 // <-- this removes vertical lines between bars
-                },
-                scaleLabel: {
-                    display: false
-                }
-            }
-        }
-    };
-    
-
-
     return (
         <div>
             <h2>Dashboard</h2>
@@ -140,4 +66,60 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+
+const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    borderWidth: 1,
+    borderDash: [5, 15],
+    title: {
+        display: true,
+        position: 'top',
+        text: 'Your Chart Title Here'  // Replace this with your desired title
+    },
+    plugins: {
+        legend: {
+            display: false
+        }
+    },
+    scales: {
+        x: {
+            ticks: {
+                display: true,
+            },
+            gridLines: {
+                display: false  // This hides the grid lines for the y-axis
+            },
+            grid: {
+                drawBorder: false,
+                lineWidth: 0 // <-- this removes vertical lines between bars
+            },
+            scaleLabel: {
+                display: false  // This hides the axis label itself
+            }
+        },
+        y: {
+            ticks: {
+                display: true,
+                // Ensuring only integer values are displayed
+                callback: function (value) {
+                    if (value % 1 === 0) {
+                        return value;
+                    }
+                }
+            },
+            gridLines: {
+                display: false  // This hides the grid lines for the y-axis
+            },
+            grid: {
+                drawBorder: false,
+                lineWidth: 0 // <-- this removes vertical lines between bars
+            },
+            scaleLabel: {
+                display: false
+            }
+        }
+    }
+};
 
