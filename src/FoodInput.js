@@ -29,7 +29,7 @@ const FoodInput = () => {
     const [hideAIResponse, setHideAIResponse] = useState(false);
 
     const handleInputChange = (e) => {
-        const lowercasedValue = e.target.value ? e.target.value.toLowerCase() : 'bad return';;
+        const lowercasedValue = e.target.value ? e.target.value.toLowerCase() : '';;
         setInput(lowercasedValue);
         if (lowercasedValue) {
             const matches = Object.keys(database).filter(food =>
