@@ -39,4 +39,9 @@ I made the sidebar scrollable but it made the tbody and theader columns misalign
 should i also make the daily food list scrollable?
 
 
-Need to fix date of dashboard
+play around with monospace font
+this color looks nice for the body background #e8e9e342
+
+font-family
+'Shojumaru', cursive; looks good but will it hinder readability!
+

@@ -14,7 +14,8 @@ const Dashboard = () => {
 
     // Filter entries from the last 7 days
     const lastSevenDaysData = dailyDiet.filter(entry => {
-        const entryDate = new Date(entry.date);
+        // Parse date in local timezone
+        const entryDate = new Date(entry.date + 'T00:00:00');
         return entryDate >= sevenDaysAgo && entryDate <= today;
     });
 
@@ -32,7 +33,8 @@ const Dashboard = () => {
     }, {});
 
     const dates = Object.keys(totalProteinsPerDay).map(dateStr => {
-        const dateObj = new Date(dateStr);
+        // Ensure local timezone is considered
+        const dateObj = new Date(dateStr + 'T00:00:00');
         return dateObj.getDate(); // Get only the day part
     });
 

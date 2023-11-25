@@ -341,3 +341,38 @@ table {
     }
 }
 
+
+
+@import url('https://fonts.googleapis.com/css2?family=Shojumaru&display=swap');
+.signature {
+  font-family: 'Shojumaru', cursive; /* This is a Google Font that resembles brush strokes */
+  color: #333; /* A dark gray, reminiscent of sumi-e ink */
+  background-color: #f5f5f5; /* A light background to make the signature pop, like rice paper */
+  padding: 8px 16px;
+  border-radius: 8px; /* Soft rounded corners */
+  border: 1px solid #ccc; /* A subtle border for definition */
+  text-align: center;
+  max-width: 200px; /* To keep the signature compact */
+  margin-top: 20px; /* Space from the content above */
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.1); /* A soft shadow for depth */
+  position: relative; /* For positioning the seal absolute within this container */
+}
+
+.seal {
+  width: 40px; /* A small, square area for the seal */
+  height: 40px;
+  background-color: #900; /* Red, common for hanko seals */
+  border-radius: 50%; /* Circle it */
+  position: absolute;
+  right: -20px; /* Position it to the right of the signature */
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.2); /* Shadow for the seal */
+}
+
+/* Optional: Add a hover effect */
+.signature:hover {
+  color: #444;
+  border-color: #aaa;
+  transition: all 0.3s ease;
+}

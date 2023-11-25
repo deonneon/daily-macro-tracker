@@ -26,7 +26,7 @@ function App() {
               <div className="journal-page">
                 <div className="main-content">
                   <div className="journal-top">
-                    <h1>Food Macro Daily Log</h1>
+                    <h1>Dailly Macro Tracker</h1>
                     <FoodInput />
                     <DailyDietList />
                   </div>
@@ -53,8 +53,9 @@ function App() {
                 <IconButton foodName="rice" icon={riceIcon} />
                 <IconButton foodName="banana" icon={bananaIcon} />
               </div>
-              <div className="credits">
+              <div className="credits signature">
                 Built by Deon
+                <div class="seal"></div>
               </div>
             </div>
           </div>
