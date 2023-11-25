@@ -18,11 +18,11 @@ exports.handler = async function (event, context) {
             messages: [
                 {
                     role: "system",
-                    content: "You are a food nutritionist who knows the protein and calorie specifications of all food.",
+                    content: "As a nutritionist, provide protein and calorie content of foods.",
                 },
                 {
                     role: "user",
-                    content: `What are the macros of a ${aiInputText}? Write a json dictionary with four keys and their values: food_name, protein, calories, and measurement.`,
+                    content: `${aiInputText}: {food_name, protein (g, float), calories, measurement (weight/volume)} as JSON.`,
                 },
             ],
             temperature: 1,
