@@ -5,10 +5,7 @@
 }
 
 .main-content {
-    width: 70%;
-    padding: 15px 50px 20px 50px;
-    box-sizing: border-box;
-    flex: 3;
+    display: block;
 }
 
 .sidebar {
@@ -20,6 +17,27 @@
     box-sizing: border-box;
 }
 
+
+.journal-container {
+    height: 100vh; /* Adjust height as needed */
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    width: 70%;
+    padding: 15px 50px 20px 50px;
+    box-sizing: border-box;
+    flex: 3;
+    scrollbar-width: none; /* For Firefox */
+  }
+
+  .journal-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .journal-page {
+    height: 100vh; /* Adjust height as needed */
+    scroll-snap-align: start;
+    padding-top:30px;
+  }
 
 th {
     text-align: left;

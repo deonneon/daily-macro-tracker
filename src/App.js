@@ -17,15 +17,29 @@ function App() {
   return (
     <DietProvider>
       <div className="App">
-        <Navbar setCurrentPage={setCurrentPage} />
+        {/*<Navbar setCurrentPage={setCurrentPage} />*/}
 
         {currentPage === 'main' && (
           <div className="container">
-            <div className="main-content">
-              <h1>Food Macro Daily Log</h1>
-              <FoodInput />
-              <DailyDietList />
-              <Dashboard />
+            <div className="journal-container">
+              {/* Your journal pages go here */}
+              <div className="journal-page">
+                <div className="main-content">
+                  <h1>Food Macro Daily Log</h1>
+                  <FoodInput />
+                  <DailyDietList />
+                  <Dashboard />
+                </div>
+              </div>
+              <div className="journal-page">
+                <div className="main-content">
+                  <h1>Food Macro Daily Log</h1>
+                  <FoodInput />
+                  <DailyDietList />
+                  <Dashboard />
+                </div>
+              </div>
+              {/* More pages as needed */}
             </div>
             <div className="sidebar">
               <div className="sidebar-foodlist">
