@@ -8,7 +8,16 @@ import Chart from 'chart.js/auto';
 const Dashboard = () => {
     const { dailyDiet } = useContext(DietContext);
 
-    const lastSevenDaysData = dailyDiet.slice(-7);
+    const today = new Date();
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(today.getDate() - 7);
+
+    // Filter entries from the last 7 days
+    const lastSevenDaysData = dailyDiet.filter(entry => {
+        const entryDate = new Date(entry.date);
+        return entryDate >= sevenDaysAgo && entryDate <= today;
+    });
+
 
     // Aggregate proteins per day
     const totalProteinsPerDay = lastSevenDaysData.reduce((acc, entry) => {
@@ -22,12 +31,17 @@ const Dashboard = () => {
         return acc;
     }, {});
 
-    const dates = Object.keys(totalProteinsPerDay);
+    const dates = Object.keys(totalProteinsPerDay).map(dateStr => {
+        const dateObj = new Date(dateStr);
+        return dateObj.getDate(); // Get only the day part
+    });
+
+    const uniqueDates = [...new Set(dates)];
     const proteinValues = Object.values(totalProteinsPerDay);
     const calorieValues = Object.values(totalCaloriesPerDay);
 
     const calorieData = {
-        labels: dates,
+        labels: uniqueDates,
         datasets: [
             {
                 label: 'Calories',
@@ -40,7 +54,7 @@ const Dashboard = () => {
     };
 
     const proteinData = {
-        labels: dates,
+        labels: uniqueDates,
         datasets: [
             {
                 label: 'Proteins',
@@ -52,11 +66,22 @@ const Dashboard = () => {
         ]
     };
 
+    const latestData = lastSevenDaysData.length > 0 ? lastSevenDaysData[lastSevenDaysData.length - 1] : null;
+
+    // Only proceed if latestData is not null
+    let latestProteinSum = 0;
+    let latestCalorieSum = 0;
+    
+    if (latestData) {
+        latestProteinSum = totalProteinsPerDay[latestData.date] || 0;
+        latestCalorieSum = totalCaloriesPerDay[latestData.date] || 0;
+    }
+
     return (
         <div>
             <h2>Dashboard</h2>
-            <p>Total Calories: {calorieValues}</p>
-            <p>Total Protein: {proteinValues}g</p>
+            <p>Latest Date Total Protein: {Math.round(latestProteinSum)}g</p>
+            <p>Latest Date Total Calories: {Math.round(latestCalorieSum)}</p>
             <div className="chartsContainer">
                 <Line data={proteinData} options={options} />
                 <Line data={calorieData} options={options} />
