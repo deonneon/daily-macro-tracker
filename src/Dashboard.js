@@ -79,9 +79,9 @@ const Dashboard = () => {
 
     return (
         <div>
-            <h2>Dashboard</h2>
+            {/*<h2>Dashboard</h2>
             <p>Latest Date Total Protein: {Math.round(latestProteinSum)}g</p>
-            <p>Latest Date Total Calories: {Math.round(latestCalorieSum)}</p>
+    <p>Latest Date Total Calories: {Math.round(latestCalorieSum)}</p>*/}
             <div className="chartsContainer">
                 <Line data={proteinData} options={options} />
                 <Line data={calorieData} options={options} />

@@ -25,17 +25,21 @@ function App() {
               {/* Your journal pages go here */}
               <div className="journal-page">
                 <div className="main-content">
-                  <h1>Food Macro Daily Log</h1>
-                  <FoodInput />
-                  <DailyDietList />
+                  <div className="journal-top">
+                    <h1>Food Macro Daily Log</h1>
+                    <FoodInput />
+                    <DailyDietList />
+                  </div>
                   <Dashboard />
                 </div>
               </div>
               <div className="journal-page">
                 <div className="main-content">
-                  <h1>Food Macro Daily Log</h1>
-                  <FoodInput />
-                  <DailyDietList />
+                  <div className="journal-top">
+                    <h1>Food Macro Daily Log</h1>
+                    <FoodInput />
+                    <DailyDietList />
+                  </div>
                   <Dashboard />
                 </div>
               </div>

@@ -1,15 +1,10 @@
-Make the y label for today say today
+Make the x label for today say today
 
 Maybe add a click to expand sidebar to get better view of database.
 when you click away from that region, it shrinks the sidebar gain. 
 maybe expand to 2/3 of screen.
 
 maybe add a confirmation notification that it was added at bottom right.
-
-
-maybe
-scrolling down shows previous days sheet. though the scrolling has to snap.
-while sidebar stays fixed.
 
 should i make a recent filter? 
 or the top for favorites?
@@ -19,11 +14,9 @@ use openfoodfact api to pull information about food that are branded.
 when filling food form, tags to attach shows up.
 add a suggested amount for each input using either ai or a prefilled sheet right below inputs.
 
-
 Break Q&A Page into general questions about macro tracking. have another section for concern. 
 like organic vs inorganic is a concern. 
 maybe integrate that while adding food. 
-
 
 To make the diet column look cleaner, instead of listing the dates, list one date and skip the others.
 
@@ -36,7 +29,6 @@ what if you accidentally log for the wrong date? Maybe there is a way to click s
 
 add by me a coffee link.
 
-
 built by deon moves when it should be fixed regardless if iconbutton is present
 
 
@@ -46,5 +38,5 @@ sept 10
 I made the sidebar scrollable but it made the tbody and theader columns misaligned. 
 should i also make the daily food list scrollable?
 
-sept 11
-I integrated the AI component but I need to make sure that the response is in the proper format. Sometimes it reports 12 sometimes it reports 12 grams
+
+Need to fix date of dashboard

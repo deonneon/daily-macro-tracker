@@ -60,16 +60,20 @@ const AIQueryComponent = ({ onDataReceived, hideResponse }) => {
             </button>
 
             {showAIInput && (
-                <div className="foodDescriptionForAI">
-                    <input
-                        value={aiInputText}
-                        onChange={handleAIInputChange}
-                        onKeyDown={handleKeyDownAI}
-                        placeholder="Please describe the food as detailed as possible."
-                    />
-                    <button onClick={handleSubmitToAI} disabled={!aiInputText.trim()}>
-                        Submit
-                    </button>
+                <div className="modal">
+                    <div className="modal-content">
+                        <div className="foodDescriptionForAI">
+                            <input
+                                value={aiInputText}
+                                onChange={handleAIInputChange}
+                                onKeyDown={handleKeyDownAI}
+                                placeholder="Please describe the food as detailed as possible."
+                            />
+                            <button onClick={handleSubmitToAI} disabled={!aiInputText.trim()}>
+                                Submit
+                            </button>
+                        </div>
+                    </div>
                 </div>
             )}
 
