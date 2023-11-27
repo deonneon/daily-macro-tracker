@@ -58,7 +58,7 @@
 @media (max-width: 600px) {
 .journal-container {
     width: 100%;
-    height:10vh;
+    height:90vh;
     padding: 10px 20px;
 }
 }
@@ -126,6 +126,7 @@ td {
         width: 100%;
         margin:10px 0px;
         font-size: 16px;
+        box-sizing: border-box;
     }
     }
 
@@ -141,9 +142,21 @@ td {
     /* Allows for scrolling if the content of the table exceeds the min-height */
 }
 
+.dailyDietDiv{
+    overflow: scroll;
+    display: flex;
+    height: 40vh;
+}
+
+@media (max-width: 600px) {
+    .dailyDietDiv{
+        height: 35vh;
+    }
+}
+
 @media (max-width: 600px) {
     .dailyDietTable {
-        font-size: 0.8em;
+        font-size: 0.6em;
     }
     }
 
@@ -376,3 +389,12 @@ table {
   border-color: #aaa;
   transition: all 0.3s ease;
 }
+
+.hamburger-icon {
+    color: rgb(194, 126, 126); /* Adjust color to match the seal's background or as needed */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px; /* Adjust size as needed */
+  }

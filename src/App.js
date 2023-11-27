@@ -10,6 +10,8 @@ import IconButton from './IconButton';
 import QAPage from './QAPage';
 import riceIcon from './icons/rice.png';
 import bananaIcon from './icons/banana.png';
+import { FaBars } from 'react-icons/fa'; // FaBars is a common hamburger icon in Font Awesome
+
 
 function App() {
   const [currentPage, setCurrentPage] = useState('main');
@@ -55,7 +57,9 @@ function App() {
               </div>
               <div className="credits signature">
                 Built by Deon
-                <div class="seal"></div>
+                <div class="seal">
+                  <FaBars className="hamburger-icon" />
+                </div>
               </div>
             </div>
           </div>
