@@ -2,13 +2,18 @@ import React, { createContext, useState, useEffect } from 'react';
 
 export const DietContext = createContext();
 
+// Get the appropriate API URL based on environment
+const API_URL = process.env.NODE_ENV === 'development' 
+    ? process.env.REACT_APP_API_URL 
+    : process.env.REACT_APP_NETLIFY_URL;
+
 export const DietProvider = ({ children }) => {
     const [database, setDatabase] = useState({});
     const [dailyDiet, setDailyDiet] = useState([]);
 
     // Fetch initial data from server
     useEffect(() => {
-        fetch('https://main--shimmering-figolla-53e06a.netlify.app/api/foods')
+        fetch(`${API_URL}/foods`)
             .then(res => res.json())
             .then(data => {
                 const transformedData = {};
@@ -24,20 +29,39 @@ export const DietProvider = ({ children }) => {
             })
             .catch(err => console.error('Failed to fetch foods:', err));
 
-        fetch('https://main--shimmering-figolla-53e06a.netlify.app/api/dailyDiet')
+        fetch(`${API_URL}/dailydiet`)
             .then(res => res.json())
             .then(data => setDailyDiet(data))
             .catch(err => console.error('Failed to fetch daily diet:', err));
     }, []);
 
     const removeFoodEntry = async (index) => {
-        const id = dailyDiet[index].id;
-        const newDailyDiet = [...dailyDiet];
-        newDailyDiet.splice(index, 1);
-        setDailyDiet(newDailyDiet);
+        try {
+            if (index < 0 || index >= dailyDiet.length) {
+                console.error('Invalid index for food entry removal');
+                return;
+            }
 
-        // Delete from server
-        await fetch(`https://main--shimmering-figolla-53e06a.netlify.app/api/dailyDiet/${id}`, { method: 'DELETE' });
+            const entry = dailyDiet[index];
+            if (!entry || !entry.id) {
+                console.error('Invalid food entry or missing ID');
+                return;
+            }
+
+            const newDailyDiet = [...dailyDiet];
+            newDailyDiet.splice(index, 1);
+            setDailyDiet(newDailyDiet);
+
+            // Delete from server
+            const response = await fetch(`${API_URL}/dailydiet/${entry.id}`, { method: 'DELETE' });
+            if (!response.ok) {
+                throw new Error(`Failed to delete entry: ${response.statusText}`);
+            }
+        } catch (error) {
+            console.error('Error deleting daily diet entry:', error);
+            // Revert the local state if the server deletion failed
+            setDailyDiet(dailyDiet);
+        }
     };
 
     const removeFoodFromDatabase = async (foodName) => {
@@ -46,11 +70,11 @@ export const DietProvider = ({ children }) => {
         setDatabase(newDatabase);
 
         // Delete from server
-        await fetch(`https://main--shimmering-figolla-53e06a.netlify.app/api/foods/${foodName}`, { method: 'DELETE' });
+        await fetch(`${API_URL}/foods/${foodName}`, { method: 'DELETE' });
     };
 
     const addFoodToDatabase = async (foodData) => {
-        const response = await fetch('https://main--shimmering-figolla-53e06a.netlify.app/api/foods', {
+        const response = await fetch(`${API_URL}/foods`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -63,14 +87,14 @@ export const DietProvider = ({ children }) => {
 
     const addFoodEntryToDailyDiet = async (foodDetails, date) => {
         console.log({ date, food_id: foodDetails.id });
-        const response = await fetch('https://main--shimmering-figolla-53e06a.netlify.app/api/dailyDiet', {
+        const response = await fetch(`${API_URL}/dailydiet`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 date,
-                food_id: foodDetails.id  // This line uses the id property from foodDetails
+                food_id: foodDetails.id
             }),
         });
 

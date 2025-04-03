@@ -1,24 +1,28 @@
-import express, { Router } from 'express';
-import serverless from 'serverless-http';
+import express from 'express';
 import cors from 'cors';
 import { createClient } from '@supabase/supabase-js';
+import dotenv from 'dotenv';
+import OpenAI from 'openai';
 
-const api = express();
-api.use(express.json());
+// Load environment variables
+dotenv.config();
+
+const app = express();
+app.use(express.json());
 
 const corsOptions = {
-    origin: process.env.NODE_ENV === 'development' 
-        ? ['http://localhost:3000', 'http://localhost:3001']
-        : 'https://shimmering-figolla-53e06a.netlify.app',
+    origin: ['http://localhost:3000', 'http://localhost:3001'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,
 };
 
-api.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
-const router = Router();
-router.get('/hello', (req, res) => res.send('Hello World!'));
+// Initialize OpenAI client
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -26,8 +30,43 @@ const supabase = createClient(
     process.env.SUPABASE_ANON_KEY
 );
 
+// OpenAI endpoint
+app.post('/api/query-openai', async (req, res) => {
+    if (req.method !== "POST") {
+        return res.status(405).send("Method Not Allowed");
+    }
+
+    const { aiInputText } = req.body;
+
+    try {
+        const response = await openai.chat.completions.create({
+            model: "gpt-4",
+            messages: [
+                {
+                    role: "system",
+                    content: "As a nutritionist, provide protein and calorie content of foods.",
+                },
+                {
+                    role: "user",
+                    content: `${aiInputText}: {food_name, protein (g, float), calories, measurement (weight/volume)} as JSON.`,
+                },
+            ],
+            temperature: 1,
+            max_tokens: 256,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+        });
+
+        res.json(response.choices[0].message.content);
+    } catch (error) {
+        console.error("Error with OpenAI:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
 // Foods endpoints
-router.get('/foods', async (req, res) => {
+app.get('/api/foods', async (req, res) => {
     try {
         const { data, error } = await supabase
             .from('foods')
@@ -41,7 +80,7 @@ router.get('/foods', async (req, res) => {
     }
 });
 
-router.post('/foods', async (req, res) => {
+app.post('/api/foods', async (req, res) => {
     try {
         const { name, protein, calories, unit } = req.body;
         const { data, error } = await supabase
@@ -58,7 +97,7 @@ router.post('/foods', async (req, res) => {
     }
 });
 
-router.delete('/foods/:name', async (req, res) => {
+app.delete('/api/foods/:name', async (req, res) => {
     try {
         const { name } = req.params;
         const { error } = await supabase
@@ -75,7 +114,7 @@ router.delete('/foods/:name', async (req, res) => {
 });
 
 // Daily Diet endpoints
-router.get('/dailydiet', async (req, res) => {
+app.get('/api/dailydiet', async (req, res) => {
     try {
         const { data, error } = await supabase
             .from('dailydiet')
@@ -109,7 +148,7 @@ router.get('/dailydiet', async (req, res) => {
     }
 });
 
-router.post('/dailydiet', async (req, res) => {
+app.post('/api/dailydiet', async (req, res) => {
     try {
         const { date, food_id } = req.body;
         const { data, error } = await supabase
@@ -126,7 +165,7 @@ router.post('/dailydiet', async (req, res) => {
     }
 });
 
-router.delete('/dailydiet/:id', async (req, res) => {
+app.delete('/api/dailydiet/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const { error } = await supabase
@@ -142,6 +181,7 @@ router.delete('/dailydiet/:id', async (req, res) => {
     }
 });
 
-api.use('/api/', router);
-
-export const handler = serverless(api); 
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+}); 
