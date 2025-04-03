@@ -36,13 +36,32 @@ export const DietProvider = ({ children }) => {
     }, []);
 
     const removeFoodEntry = async (index) => {
-        const id = dailyDiet[index].id;
-        const newDailyDiet = [...dailyDiet];
-        newDailyDiet.splice(index, 1);
-        setDailyDiet(newDailyDiet);
+        try {
+            if (index < 0 || index >= dailyDiet.length) {
+                console.error('Invalid index for food entry removal');
+                return;
+            }
 
-        // Delete from server
-        await fetch(`${API_URL}/dailydiet/${id}`, { method: 'DELETE' });
+            const entry = dailyDiet[index];
+            if (!entry || !entry.id) {
+                console.error('Invalid food entry or missing ID');
+                return;
+            }
+
+            const newDailyDiet = [...dailyDiet];
+            newDailyDiet.splice(index, 1);
+            setDailyDiet(newDailyDiet);
+
+            // Delete from server
+            const response = await fetch(`${API_URL}/dailydiet/${entry.id}`, { method: 'DELETE' });
+            if (!response.ok) {
+                throw new Error(`Failed to delete entry: ${response.statusText}`);
+            }
+        } catch (error) {
+            console.error('Error deleting daily diet entry:', error);
+            // Revert the local state if the server deletion failed
+            setDailyDiet(dailyDiet);
+        }
     };
 
     const removeFoodFromDatabase = async (foodName) => {
