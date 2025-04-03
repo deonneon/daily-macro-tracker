@@ -2,18 +2,23 @@
     display: flex;
     justify-content: space-between;
     height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .container {
         flex-direction: column;
+        height: auto;
+        overflow-y: auto;
     }
-    }
+}
 
 .main-content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 100%;
 }
 
 .main-content > :first-child,
@@ -22,63 +27,85 @@
 }
 
 .journal-top{
-    height: 70vh;
+    height: 60vh;
+    overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+    .journal-top {
+        height: auto;
+        min-height: 50vh;
+    }
 }
 
 .sidebar {
     flex: 1;
     border-left: 1px solid #ccc;
-    padding: 20px 50px;
+    padding: 20px 2%;
     height: 100vh;
     overflow-y: auto;
     box-sizing: border-box;
+    max-width: 30%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .sidebar {
-        height: 10vh;
-        padding: 10px 20px;
+        height: auto;
+        min-height: 300px;
+        padding: 15px;
         border-top: 1px solid #888;
+        border-left: none;
+        font-size: 0.9em;
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        min-height: 250px;
+        padding: 10px;
         font-size: 0.8em;
-        overflow-y: unset;
     }
-    }
+}
 
 .journal-container {
-    height: 100vh; /* Adjust height as needed */
+    height: 100vh;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     width: 70%;
-    padding: 15px 50px 20px 50px;
+    padding: 15px 5%;
     box-sizing: border-box;
     flex: 3;
     scrollbar-width: none; /* For Firefox */
-  }
-
-@media (max-width: 600px) {
-.journal-container {
-    width: 100%;
-    height:90vh;
-    padding: 10px 20px;
 }
+
+@media (max-width: 768px) {
+    .journal-container {
+        width: 100%;
+        height: auto;
+        min-height: 60vh;
+        padding: 15px;
+    }
 }
 
 .journal-container::-webkit-scrollbar {
-display: none;
+    display: none;
 }
 
 .journal-page {
-height: 100vh; /* Adjust height as needed */
-scroll-snap-align: start;
-padding-top:30px;
+    min-height: 100vh;
+    scroll-snap-align: start;
+    padding-top: 30px;
+    width: 100%;
 }
 
-
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .journal-page {
-        padding-top:20px;
+        min-height: auto;
+        padding-top: 15px;
     }
-    }
+}
 
 th {
     text-align: left;
@@ -112,84 +139,111 @@ td {
 
 .foodInput {
     padding-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
-
 
 .foodInput input {
     height: 30px;
     margin-right: 10px;
     text-align: center;
+    flex: 1;
+    min-width: 150px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+    .foodInput {
+        flex-direction: column;
+    }
+    
     .foodInput input {
         width: 100%;
-        margin:10px 0px;
+        margin: 5px 0;
         font-size: 16px;
         box-sizing: border-box;
     }
-    }
+}
 
 .foodInput button {
     height: 36px;
+    padding: 0 15px;
+}
+
+@media (max-width: 768px) {
+    .foodInput button {
+        width: 100%;
+        margin-top: 10px;
+    }
 }
 
 .dailyDietTable {
-    min-height: 200px;
-    display: block;
-    /* Allows us to set height on a table, but it'll affect how tbody and thead behave */
-    overflow-y: auto;
-    /* Allows for scrolling if the content of the table exceeds the min-height */
+    min-width: 100%;
+    border-collapse: collapse;
 }
 
-.dailyDietDiv{
-    overflow: scroll;
-    display: flex;
+.dailyDietDiv {
+    overflow: auto;
     height: 40vh;
+    width: 100%;
 }
 
-@media (max-width: 600px) {
-    .dailyDietDiv{
+@media (max-width: 768px) {
+    .dailyDietDiv {
         height: 35vh;
+        max-height: 300px;
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
     .dailyDietTable {
-        font-size: 0.6em;
+        font-size: 0.7em;
     }
+    
+    .dailyDietTable th, 
+    .dailyDietTable td {
+        padding: 5px 3px;
     }
+}
 
 .chartsContainer {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    /* Creates space between the charts */
-    max-width: calc(40% - 30px);
+    width: 100%;
+    margin-top: 20px;
+    gap: 20px;
 }
 
-.chartColumn {
-    flex: 1;
-    /* Each chart will take equal width */
-    padding: 0 15px;
-    max-width: calc(50% - 30px);
-    /* Account for padding; 50% for half the container width */
-    overflow: hidden;
-    height: 200px;
-    width: 300px;
-}
-
-/* Responsive adjustments for screens less than 600px */
-@media screen and (max-width: 600px) {
+@media (max-width: 768px) {
     .chartsContainer {
-        flex-direction: row;
-        justify-content: normal;
-        width: 50%;
-        max-width: none;
+        flex-direction: column;
+        width: 100%;
     }
-    .chartColumn {
-        padding: 0 15px;
-        max-width: 100%;
-        /* Each chart takes full width, accounting for padding */
+}
+
+.chartsContainer canvas {
+    width: 100% !important;
+    max-height: 300px;
+}
+
+@media (max-width: 480px) {
+    .chartsContainer canvas {
+        max-height: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-between;
+    }
+    
+    .dashboard-stats p {
+        margin: 5px 0;
+        flex: 1 0 45%;
     }
 }
 
@@ -236,28 +290,110 @@ td {
 
 
 .sidebar-foodlist {
-    height: 75vh;
-}
-
-/* Set tbody to be scrollable and provide a maximum height */
-.sidebar-foodlist tbody {
-    display: block;
-    max-height: 65vh;
-    /* Adjust this value based on your needs */
+    height: 70vh;
     overflow-y: auto;
 }
 
-/* Make other table parts block display so they line up correctly */
-.sidebar-foodlist thead,
-.sidebar-foodlist tr {
+@media (max-width: 768px) {
+    .sidebar-foodlist {
+        height: auto;
+        max-height: 200px;
+    }
+}
+
+.database-container {
+    width: 100%;
+}
+
+.database-container h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+    .database-container h2 {
+        margin-bottom: 10px;
+        font-size: 1.4em;
+    }
+}
+
+/* Fix table alignment and make it more responsive */
+.sidebar-foodlist-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.sidebar-foodlist-table th,
+.sidebar-foodlist-table td {
+    padding: 8px 5px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar-foodlist-table th {
+    background-color: #f8f8f8;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    font-weight: bold;
+}
+
+.sidebar-foodlist-table tbody {
+    display: block;
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+.sidebar-foodlist-table thead,
+.sidebar-foodlist-table tbody tr {
     display: table;
     width: 100%;
     table-layout: fixed;
 }
 
-/* This will be required to make the table take full width */
-.sidebar-foodlist table {
-    width: 100%;
+.sidebar-foodlist-table th:first-child,
+.sidebar-foodlist-table td:first-child {
+    width: 30%;
+}
+
+.sidebar-foodlist-table th:nth-child(2),
+.sidebar-foodlist-table td:nth-child(2),
+.sidebar-foodlist-table th:nth-child(3),
+.sidebar-foodlist-table td:nth-child(3) {
+    width: 20%;
+}
+
+.sidebar-foodlist-table th:nth-child(4),
+.sidebar-foodlist-table td:nth-child(4) {
+    width: 20%;
+}
+
+.sidebar-foodlist-table th:last-child,
+.sidebar-foodlist-table td:last-child {
+    width: 10%;
+}
+
+@media (max-width: 768px) {
+    .sidebar-foodlist-table tbody {
+        max-height: 150px;
+    }
+    
+    .sidebar-foodlist-table th,
+    .sidebar-foodlist-table td {
+        padding: 6px 3px;
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar-foodlist-table th,
+    .sidebar-foodlist-table td {
+        padding: 4px 2px;
+        font-size: 0.9em;
+    }
 }
 
 .credits {
@@ -398,3 +534,35 @@ table {
     transform: translate(-50%, -50%);
     font-size: 24px; /* Adjust size as needed */
   }
+
+.dashboard {
+    width: 100%;
+    padding: 15px 0;
+    margin-top: 20px;
+}
+
+.chart-wrapper {
+    flex: 1;
+    min-width: 300px;
+    height: 250px;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .chart-wrapper {
+        width: 100%;
+        min-width: 100%;
+        height: 220px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chart-wrapper {
+        height: 180px;
+    }
+    
+    .dashboard h2 {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+    }
+}

@@ -19,7 +19,7 @@ function App() {
   return (
     <DietProvider>
       <div className="App">
-        {/*<Navbar setCurrentPage={setCurrentPage} />*/}
+        {/* <Navbar setCurrentPage={setCurrentPage} /> */}
 
         {currentPage === 'main' && (
           <div className="container">
@@ -28,7 +28,7 @@ function App() {
               <div className="journal-page">
                 <div className="main-content">
                   <div className="journal-top">
-                    <h1>Dailly Macro Tracker</h1>
+                    <h1>Daily Macro Tracker</h1>
                     <FoodInput />
                     <DailyDietList />
                   </div>

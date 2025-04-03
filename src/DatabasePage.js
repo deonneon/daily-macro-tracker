@@ -26,15 +26,16 @@ const DatabasePage = () => {
     };
 
     return (
-        <div>
+        <div className="database-container">
             <h2>Food Database</h2>
-            <table>
+            <table className="sidebar-foodlist-table">
                 <thead>
                     <tr>
                         <th>Food</th>
                         <th className="right-align">Protein</th>
                         <th className="right-align">Calories</th>
                         <th>Unit</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

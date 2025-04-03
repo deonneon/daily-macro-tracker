@@ -73,20 +73,26 @@ const Dashboard = () => {
     // Only proceed if latestData is not null
     let latestProteinSum = 0;
     let latestCalorieSum = 0;
-    
+
     if (latestData) {
         latestProteinSum = totalProteinsPerDay[latestData.date] || 0;
         latestCalorieSum = totalCaloriesPerDay[latestData.date] || 0;
     }
 
     return (
-        <div>
-            {/*<h2>Dashboard</h2>
-            <p>Latest Date Total Protein: {Math.round(latestProteinSum)}g</p>
-    <p>Latest Date Total Calories: {Math.round(latestCalorieSum)}</p>*/}
+        <div className="dashboard">
+            <h2>Dashboard</h2>
+            <div className="dashboard-stats">
+                <p>Latest Date Total Protein: {Math.round(latestProteinSum)}g</p>
+                <p>Latest Date Total Calories: {Math.round(latestCalorieSum)}</p>
+            </div>
             <div className="chartsContainer">
-                <Line data={proteinData} options={options} />
-                <Line data={calorieData} options={options} />
+                <div className="chart-wrapper">
+                    <Line data={proteinData} options={options} />
+                </div>
+                <div className="chart-wrapper">
+                    <Line data={calorieData} options={options} />
+                </div>
             </div>
         </div>
     );
