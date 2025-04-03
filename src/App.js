@@ -10,6 +10,8 @@ import IconButton from './IconButton';
 import QAPage from './QAPage';
 import riceIcon from './icons/rice.png';
 import bananaIcon from './icons/banana.png';
+import { FaBars } from 'react-icons/fa'; // FaBars is a common hamburger icon in Font Awesome
+
 
 function App() {
   const [currentPage, setCurrentPage] = useState('main');
@@ -17,15 +19,33 @@ function App() {
   return (
     <DietProvider>
       <div className="App">
-        <Navbar setCurrentPage={setCurrentPage} />
+        {/*<Navbar setCurrentPage={setCurrentPage} />*/}
 
         {currentPage === 'main' && (
           <div className="container">
-            <div className="main-content">
-              <h1>Food Macro Daily Log</h1>
-              <FoodInput />
-              <DailyDietList />
-              <Dashboard />
+            <div className="journal-container">
+              {/* Your journal pages go here */}
+              <div className="journal-page">
+                <div className="main-content">
+                  <div className="journal-top">
+                    <h1>Dailly Macro Tracker</h1>
+                    <FoodInput />
+                    <DailyDietList />
+                  </div>
+                  <Dashboard />
+                </div>
+              </div>
+              <div className="journal-page">
+                <div className="main-content">
+                  <div className="journal-top">
+                    <h1>Food Macro Daily Log</h1>
+                    <FoodInput />
+                    <DailyDietList />
+                  </div>
+                  <Dashboard />
+                </div>
+              </div>
+              {/* More pages as needed */}
             </div>
             <div className="sidebar">
               <div className="sidebar-foodlist">
@@ -35,8 +55,11 @@ function App() {
                 <IconButton foodName="rice" icon={riceIcon} />
                 <IconButton foodName="banana" icon={bananaIcon} />
               </div>
-              <div className="credits">
+              <div className="credits signature">
                 Built by Deon
+                <div class="seal">
+                  <FaBars className="hamburger-icon" />
+                </div>
               </div>
             </div>
           </div>

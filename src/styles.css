@@ -4,11 +4,25 @@
     height: 100vh;
 }
 
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+    }
+    }
+
 .main-content {
-    width: 70%;
-    padding: 15px 50px 20px 50px;
-    box-sizing: border-box;
-    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.main-content > :first-child,
+.main-content > :last-child {
+  flex-grow: 0;
+}
+
+.journal-top{
+    height: 70vh;
 }
 
 .sidebar {
@@ -20,6 +34,51 @@
     box-sizing: border-box;
 }
 
+@media (max-width: 600px) {
+    .sidebar {
+        height: 10vh;
+        padding: 10px 20px;
+        border-top: 1px solid #888;
+        font-size: 0.8em;
+        overflow-y: unset;
+    }
+    }
+
+.journal-container {
+    height: 100vh; /* Adjust height as needed */
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    width: 70%;
+    padding: 15px 50px 20px 50px;
+    box-sizing: border-box;
+    flex: 3;
+    scrollbar-width: none; /* For Firefox */
+  }
+
+@media (max-width: 600px) {
+.journal-container {
+    width: 100%;
+    height:90vh;
+    padding: 10px 20px;
+}
+}
+
+.journal-container::-webkit-scrollbar {
+display: none;
+}
+
+.journal-page {
+height: 100vh; /* Adjust height as needed */
+scroll-snap-align: start;
+padding-top:30px;
+}
+
+
+@media (max-width: 600px) {
+    .journal-page {
+        padding-top:20px;
+    }
+    }
 
 th {
     text-align: left;
@@ -55,11 +114,21 @@ td {
     padding-bottom: 20px;
 }
 
+
 .foodInput input {
     height: 30px;
     margin-right: 10px;
     text-align: center;
 }
+
+@media (max-width: 600px) {
+    .foodInput input {
+        width: 100%;
+        margin:10px 0px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+    }
 
 .foodInput button {
     height: 36px;
@@ -72,6 +141,24 @@ td {
     overflow-y: auto;
     /* Allows for scrolling if the content of the table exceeds the min-height */
 }
+
+.dailyDietDiv{
+    overflow: scroll;
+    display: flex;
+    height: 40vh;
+}
+
+@media (max-width: 600px) {
+    .dailyDietDiv{
+        height: 35vh;
+    }
+}
+
+@media (max-width: 600px) {
+    .dailyDietTable {
+        font-size: 0.6em;
+    }
+    }
 
 .chartsContainer {
     display: flex;
@@ -91,8 +178,30 @@ td {
     width: 300px;
 }
 
+/* Responsive adjustments for screens less than 600px */
+@media screen and (max-width: 600px) {
+    .chartsContainer {
+        flex-direction: row;
+        justify-content: normal;
+        width: 50%;
+        max-width: none;
+    }
+    .chartColumn {
+        padding: 0 15px;
+        max-width: 100%;
+        /* Each chart takes full width, accounting for padding */
+    }
+}
+
 .showForm {
     padding-top: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    .showForm button {
+        width:100%;
+        margin-bottom:10px;
+    }
 }
 
 .icon-button {
@@ -203,3 +312,89 @@ table {
 .ai-response {
     padding-top: 10px;
 }
+
+.modal-cancel-button {
+    display: none; /* Hide by default */
+}
+
+@media (max-width: 600px) {
+    .modal {
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        animation-name: animatetop;
+        animation-duration: 0.4s;
+    }
+    
+    @keyframes animatetop {
+        from {top: -300px; opacity: 0} 
+        to {top: 0; opacity: 1}
+    }
+
+    .modal-cancel-button {
+        display: block; /* Show the button on small screens */
+    }
+}
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Shojumaru&display=swap');
+.signature {
+  font-family: 'Shojumaru', cursive; /* This is a Google Font that resembles brush strokes */
+  color: #333; /* A dark gray, reminiscent of sumi-e ink */
+  background-color: #f5f5f5; /* A light background to make the signature pop, like rice paper */
+  padding: 8px 16px;
+  border-radius: 8px; /* Soft rounded corners */
+  border: 1px solid #ccc; /* A subtle border for definition */
+  text-align: center;
+  max-width: 200px; /* To keep the signature compact */
+  margin-top: 20px; /* Space from the content above */
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.1); /* A soft shadow for depth */
+  position: relative; /* For positioning the seal absolute within this container */
+}
+
+.seal {
+  width: 40px; /* A small, square area for the seal */
+  height: 40px;
+  background-color: #900; /* Red, common for hanko seals */
+  border-radius: 50%; /* Circle it */
+  position: absolute;
+  right: -20px; /* Position it to the right of the signature */
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.2); /* Shadow for the seal */
+}
+
+/* Optional: Add a hover effect */
+.signature:hover {
+  color: #444;
+  border-color: #aaa;
+  transition: all 0.3s ease;
+}
+
+.hamburger-icon {
+    color: rgb(194, 126, 126); /* Adjust color to match the seal's background or as needed */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px; /* Adjust size as needed */
+  }

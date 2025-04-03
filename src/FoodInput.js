@@ -27,6 +27,7 @@ const FoodInput = () => {
     const [showCancel, setShowCancel] = useState(false);
     const inputRef = useRef(null);
     const [hideAIResponse, setHideAIResponse] = useState(false);
+    const [aiDataReturned, setAIDataReturned] = useState(false);
 
     const handleInputChange = (e) => {
         const lowercasedValue = e.target.value ? e.target.value.toLowerCase() : '';;
@@ -78,6 +79,7 @@ const FoodInput = () => {
         setShowForm(false);
         setInput('');
         setShowCancel(false);
+        setAIDataReturned(false);
     };
 
     const handleKeyDownAdd = (e) => {
@@ -116,6 +118,7 @@ const FoodInput = () => {
         setShowForm(false);
         setShowCancel(false);
         setHideAIResponse(true);
+        setAIDataReturned(false);
     };
 
     const handleAIData = (data) => {
@@ -125,7 +128,8 @@ const FoodInput = () => {
             setCalorieInput(data.calories || '');
             setUnitInput(data.measurement || '');
             setShowForm(true);
-            setHideAIResponse(false)
+            setHideAIResponse(false);
+            setAIDataReturned(true);
         }
     };
 
@@ -162,13 +166,18 @@ const FoodInput = () => {
             <AIQueryComponent onDataReceived={handleAIData} hideResponse={hideAIResponse} />
 
             {showForm && (
-                <div className="showForm">
-                    <p>Please fill in as much as possible.</p>
-                    <input value={proteinInput} onChange={handleProteinInputChange} placeholder="Protein" />
-                    <input value={calorieInput} onChange={handleCalorieInputChange} placeholder="Calories" />
-                    <input value={unitInput} onChange={(e) => setUnitInput(e.target.value)} placeholder="Unit of Measurement" />
-                    <button onClick={handleSubmitNewFood} disabled={!input.trim()}>Submit New Food</button>
-                </div>
+                <div className="modal">
+                    <div className="modal-content">
+                        <div className="showForm">
+                            <p>{aiDataReturned ? "We guesstimated the amount. Please Review." : "Please fill in as much as possible."}</p>
+                            <input value={proteinInput} onChange={handleProteinInputChange} placeholder="Protein" />
+                            <input value={calorieInput} onChange={handleCalorieInputChange} placeholder="Calories" />
+                            <input value={unitInput} onChange={(e) => setUnitInput(e.target.value)} placeholder="Unit of Measurement" />
+                            <button onClick={handleSubmitNewFood} disabled={!input.trim()}>Submit New Food</button>
+                            <button className="modal-cancel-button" onClick={handleCancel}>Cancel</button>
+                        </div>
+                    </div>
+                </div>  
             )}
         </div>
     );
