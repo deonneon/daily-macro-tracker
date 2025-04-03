@@ -19,7 +19,9 @@ function App() {
   return (
     <DietProvider>
       <div className="App">
-        {/* <Navbar setCurrentPage={setCurrentPage} /> */}
+        <div style={{ display: 'none' }}>
+          <Navbar setCurrentPage={setCurrentPage} />
+        </div>
 
         {currentPage === 'main' && (
           <div className="container">
