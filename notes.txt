@@ -29,7 +29,7 @@ what if you accidentally log for the wrong date? Maybe there is a way to click s
 
 add by me a coffee link.
 
-built by deon moves when it should be fixed regardless if iconbutton is present
+    
 
 
 
@@ -45,3 +45,8 @@ this color looks nice for the body background #e8e9e342
 font-family
 'Shojumaru', cursive; looks good but will it hinder readability!
 
+
+
+when the add food stuff is added, it adds additional height instead of maintaining same heigh.
+
+click ask ai opens up new window but there is no close. 

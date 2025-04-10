@@ -1,0 +1,182 @@
+# Overview
+The Daily Macro Diary is a comprehensive nutrition tracking application designed to help users monitor their daily food intake and macronutrient consumption. The application combines the convenience of manual entry with AI-powered food recognition, making it easier for users to maintain consistent dietary tracking. With features like a quick-access food catalog and real-time macro dashboard, users can make informed decisions about their nutrition throughout the day.
+
+# Core Features
+
+1. Food Entry System
+   - Manual Entry Mode
+     - Custom food item creation with macro details
+     - Portion size adjustment
+     - Meal time categorization (breakfast, lunch, dinner, snacks)
+   
+   - AI Auto-Fill Mode
+     - Image-based food recognition
+     - Automatic macro calculation
+     - Portion size estimation
+     - Suggested food matches
+
+2. Quick Access Sidebar (Food Catalog)
+   - Previously added food items library
+   - Frequently used items section
+   - Quick add functionality
+   - Custom categorization
+   - Search and filter capabilities
+
+3. Macro Dashboard
+   - Real-time macro tracking
+   - Daily goals vs. actual intake
+   - Protein, carbs, and fat breakdown
+   - Calorie summary
+   - Progress visualization
+
+# User Experience
+
+User Personas:
+1. Health-Conscious Professionals
+   - Need: Quick and accurate food tracking
+   - Pain point: Limited time for manual entry
+   - Solution: AI auto-fill and quick add features
+
+2. Fitness Enthusiasts
+   - Need: Precise macro tracking
+   - Pain point: Complex food combinations
+   - Solution: Detailed manual entry and saved meals
+
+Key User Flows:
+1. Adding a Food Item
+   - Manual: Select entry mode → Fill details → Save to catalog
+   - AI: Take photo → Review suggestions → Adjust if needed → Save
+
+2. Using Quick Access
+   - Open sidebar → Search/filter items → Quick add to daily log
+
+3. Monitoring Progress
+   - View dashboard → Check macro goals → Adjust remaining meals
+
+UI/UX Considerations:
+- Clean, minimalist interface
+- One-click quick add functionality
+- Intuitive navigation between features
+- Mobile-responsive design
+- Clear visual feedback for actions
+
+# Technical Architecture
+
+System Components:
+1. Frontend
+   - Next.js application
+   - TailwindCSS for styling
+   - React components for reusability
+   - Client-side state management
+
+2. Backend
+   - API routes for data handling
+   - AI integration service
+   - Database management
+   - Authentication system
+
+Data Models:
+1. User
+   - Profile information
+   - Macro goals
+   - Preferences
+
+2. FoodItem
+   - Nutritional information
+   - Serving sizes
+   - User associations
+   - Categories
+
+3. DailyLog
+   - Date
+   - Meals
+   - Total macros
+   - Progress metrics
+
+APIs and Integrations:
+- Food recognition AI service
+- Nutritional database API
+- Authentication provider
+- Image processing service
+
+# Development Roadmap
+
+Phase 1: MVP
+- Basic user authentication
+- Manual food entry system
+- Simple food catalog (sidebar)
+- Basic macro dashboard
+- Core database structure
+
+Phase 2: Enhanced Features
+- AI food recognition integration
+- Advanced search and filtering
+- Expanded food catalog features
+- Enhanced macro visualizations
+- Custom categories and tags
+
+Phase 3: Advanced Features
+- Meal planning functionality
+- Recipe builder
+- Progress tracking over time
+- Social sharing features
+- Export capabilities
+
+# Logical Dependency Chain
+
+Foundation:
+1. User authentication system
+2. Basic database structure
+3. Core UI components
+
+Initial Features:
+1. Manual food entry system
+2. Basic food catalog
+3. Simple macro tracking
+
+Enhancement Layer:
+1. AI integration
+2. Advanced search
+3. Enhanced visualizations
+
+# Risks and Mitigations
+
+Technical Challenges:
+1. AI Accuracy
+   - Risk: Incorrect food recognition
+   - Mitigation: Manual override options, continuous AI training
+
+2. Performance
+   - Risk: Slow load times with large food catalogs
+   - Mitigation: Pagination, lazy loading, efficient caching
+
+3. Data Accuracy
+   - Risk: Incorrect macro calculations
+   - Mitigation: Verified database sources, user correction capability
+
+MVP Considerations:
+- Focus on core manual entry first
+- Ensure robust food catalog before AI integration
+- Prioritize user experience over feature quantity
+
+Resource Optimization:
+- Use established AI services instead of custom solutions
+- Implement efficient caching strategies
+- Utilize serverless architecture where possible
+
+# Appendix
+
+Technical Specifications:
+- Frontend: Next.js, TypeScript, TailwindCSS
+- Backend: Next.js API routes
+- Database: PostgreSQL
+- AI Service: OpenAI or similar
+- Authentication: NextAuth.js
+- Image Storage: Cloud storage solution
+
+Success Metrics:
+- User engagement (daily active users)
+- Food entry completion rate
+- AI recognition accuracy
+- User retention rate
+- Feature adoption metrics 
